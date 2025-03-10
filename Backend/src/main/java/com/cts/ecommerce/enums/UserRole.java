@@ -1,5 +1,6 @@
 package com.cts.ecommerce.enums;
 
-public class UserRole {
+public enum UserRole {
 
+	ADMIN, USER
 }
