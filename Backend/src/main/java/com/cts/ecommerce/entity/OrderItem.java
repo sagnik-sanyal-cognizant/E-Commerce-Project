@@ -1,9 +1,9 @@
-package com.cts.Ecommerce.entity;
+package com.cts.ecommerce.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import com.cts.Ecommerce.enums.OrderStatus;
+import com.cts.ecommerce.enums.OrderStatus;
 
 import jakarta.persistence.*;
 import lombok.Data;

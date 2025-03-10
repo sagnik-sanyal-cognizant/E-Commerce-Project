@@ -1,4 +1,4 @@
-package com.cts.Ecommerce.controller;
+package com.cts.ecommerce.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -9,10 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import com.cts.Ecommerce.dto.OrderRequest;
-import com.cts.Ecommerce.dto.Response;
-import com.cts.Ecommerce.enums.OrderStatus;
-import com.cts.Ecommerce.service.interf.OrderItemService;
+import com.cts.ecommerce.dto.OrderRequest;
+import com.cts.ecommerce.dto.Response;
+import com.cts.ecommerce.enums.OrderStatus;
+import com.cts.ecommerce.service.interf.OrderItemService;
 
 import java.time.LocalDateTime;
 

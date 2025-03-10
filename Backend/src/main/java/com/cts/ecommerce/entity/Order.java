@@ -1,4 +1,4 @@
-package com.cts.Ecommerce.entity;
+package com.cts.ecommerce.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
