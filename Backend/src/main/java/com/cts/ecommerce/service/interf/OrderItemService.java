@@ -1,11 +1,11 @@
-package com.cts.Ecommerce.service.interf;
+package com.cts.ecommerce.service.interf;
 
 import org.springframework.data.domain.Pageable;
 import java.time.LocalDateTime;
 
-import com.cts.Ecommerce.dto.OrderRequest;
-import com.cts.Ecommerce.dto.Response;
-import com.cts.Ecommerce.enums.OrderStatus;
+import com.cts.ecommerce.dto.OrderRequest;
+import com.cts.ecommerce.dto.Response;
+import com.cts.ecommerce.enums.OrderStatus;
 
 public interface OrderItemService {
     Response placeOrder(OrderRequest orderRequest);
