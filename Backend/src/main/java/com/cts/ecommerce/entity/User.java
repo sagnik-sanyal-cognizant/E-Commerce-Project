@@ -3,7 +3,7 @@ package com.cts.ecommerce.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.cts.Ecommerce.enums.UserRole;
+import com.cts.ecommerce.enums.UserRole;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
