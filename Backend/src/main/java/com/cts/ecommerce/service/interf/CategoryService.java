@@ -1,8 +1,8 @@
 package com.cts.ecommerce.service.interf;
 
 
-import com.cts.Ecommerce.dto.CategoryDto;
-import com.cts.Ecommerce.dto.Response;
+import com.cts.ecommerce.dto.CategoryDto;
+import com.cts.ecommerce.dto.Response;
 
 public interface CategoryService {
 

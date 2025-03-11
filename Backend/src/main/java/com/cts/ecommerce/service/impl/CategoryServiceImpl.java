@@ -5,13 +5,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import com.cts.Ecommerce.dto.CategoryDto;
-import com.cts.Ecommerce.dto.Response;
-import com.cts.Ecommerce.entity.Category;
-import com.cts.Ecommerce.exception.NotFoundException;
-import com.cts.Ecommerce.mapper.EntityDtoMapper;
-import com.cts.Ecommerce.repository.CategoryRepo;
-import com.cts.Ecommerce.service.interf.CategoryService;
+import com.cts.ecommerce.dto.CategoryDto;
+import com.cts.ecommerce.dto.Response;
+import com.cts.ecommerce.entity.Category;
+import com.cts.ecommerce.exception.NotFoundException;
+import com.cts.ecommerce.mapper.EntityDtoMapper;
+import com.cts.ecommerce.repository.CategoryRepo;
+import com.cts.ecommerce.service.interf.CategoryService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -83,4 +83,3 @@ public class CategoryServiceImpl implements CategoryService {
                 .build();
     }
 }
-
