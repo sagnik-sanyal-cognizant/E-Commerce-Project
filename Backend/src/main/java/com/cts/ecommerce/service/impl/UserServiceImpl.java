@@ -8,17 +8,17 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.cts.Ecommerce.dto.LoginRequest;
-import com.cts.Ecommerce.dto.Response;
-import com.cts.Ecommerce.dto.UserDto;
-import com.cts.Ecommerce.entity.User;
-import com.cts.Ecommerce.enums.UserRole;
-import com.cts.Ecommerce.exception.InvalidCredentialsException;
-import com.cts.Ecommerce.exception.NotFoundException;
-import com.cts.Ecommerce.mapper.EntityDtoMapper;
-import com.cts.Ecommerce.repository.UserRepo;
-import com.cts.Ecommerce.security.JwtUtils;
-import com.cts.Ecommerce.service.interf.UserService;
+import com.cts.ecommerce.dto.LoginRequest;
+import com.cts.ecommerce.dto.Response;
+import com.cts.ecommerce.dto.UserDto;
+import com.cts.ecommerce.entity.User;
+import com.cts.ecommerce.enums.UserRole;
+import com.cts.ecommerce.exception.InvalidCredentialsException;
+import com.cts.ecommerce.exception.NotFoundException;
+import com.cts.ecommerce.mapper.EntityDtoMapper;
+import com.cts.ecommerce.repository.UserRepo;
+import com.cts.ecommerce.security.JwtUtils;
+import com.cts.ecommerce.service.interf.UserService;
 
 import java.util.*;
 
