@@ -1,9 +1,9 @@
-package com.cts.Ecommerce.specification;
+package com.cts.ecommerce.specification;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import com.cts.Ecommerce.entity.OrderItem;
-import com.cts.Ecommerce.enums.OrderStatus;
+import com.cts.ecommerce.entity.OrderItem;
+import com.cts.ecommerce.enums.OrderStatus;
 
 import java.time.LocalDateTime;
 

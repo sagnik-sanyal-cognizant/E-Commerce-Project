@@ -1,4 +1,4 @@
-package com.cts.Ecommerce.service.impl;
+package com.cts.ecommerce.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.cts.Ecommerce.dto.*;
-import com.cts.Ecommerce.entity.*;
-import com.cts.Ecommerce.enums.OrderStatus;
-import com.cts.Ecommerce.exception.NotFoundException;
-import com.cts.Ecommerce.mapper.EntityDtoMapper;
-import com.cts.Ecommerce.repository.*;
-import com.cts.Ecommerce.service.interf.*;
-import com.cts.Ecommerce.specification.OrderItemSpecification;
+import com.cts.ecommerce.dto.*;
+import com.cts.ecommerce.entity.*;
+import com.cts.ecommerce.enums.OrderStatus;
+import com.cts.ecommerce.exception.NotFoundException;
+import com.cts.ecommerce.mapper.EntityDtoMapper;
+import com.cts.ecommerce.repository.*;
+import com.cts.ecommerce.service.interf.*;
+import com.cts.ecommerce.specification.OrderItemSpecification;
 
 
 
