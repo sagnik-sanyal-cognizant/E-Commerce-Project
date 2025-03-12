@@ -1,4 +1,4 @@
-package com.cts.Ecommerce.dto;
+package com.cts.ecommerce.dto;
 
 import java.math.BigDecimal;
 

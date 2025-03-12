@@ -1,4 +1,4 @@
-package com.cts.Ecommerce.controller;
+package com.cts.ecommerce.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -6,9 +6,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.cts.Ecommerce.dto.Response;
-import com.cts.Ecommerce.exception.InvalidCredentialsException;
-import com.cts.Ecommerce.service.interf.ProductService;
+import com.cts.ecommerce.dto.Response;
+import com.cts.ecommerce.exception.InvalidCredentialsException;
+import com.cts.ecommerce.service.interf.ProductService;
 
 import jakarta.validation.constraints.NotNull;
 

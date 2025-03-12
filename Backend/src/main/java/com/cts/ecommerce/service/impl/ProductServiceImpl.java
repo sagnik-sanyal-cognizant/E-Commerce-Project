@@ -1,4 +1,4 @@
-package com.cts.Ecommerce.service.impl;
+package com.cts.ecommerce.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -6,15 +6,15 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.cts.Ecommerce.dto.ProductDto;
-import com.cts.Ecommerce.dto.Response;
-import com.cts.Ecommerce.entity.Category;
-import com.cts.Ecommerce.entity.Product;
-import com.cts.Ecommerce.exception.NotFoundException;
-import com.cts.Ecommerce.mapper.EntityDtoMapper;
-import com.cts.Ecommerce.repository.CategoryRepo;
-import com.cts.Ecommerce.repository.ProductRepo;
-import com.cts.Ecommerce.service.interf.ProductService;
+import com.cts.ecommerce.dto.ProductDto;
+import com.cts.ecommerce.dto.Response;
+import com.cts.ecommerce.entity.Category;
+import com.cts.ecommerce.entity.Product;
+import com.cts.ecommerce.exception.NotFoundException;
+import com.cts.ecommerce.mapper.EntityDtoMapper;
+import com.cts.ecommerce.repository.CategoryRepo;
+import com.cts.ecommerce.repository.ProductRepo;
+import com.cts.ecommerce.service.interf.ProductService;
 
 import java.io.IOException;
 import java.math.BigDecimal;

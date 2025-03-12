@@ -1,10 +1,10 @@
-package com.cts.Ecommerce.service.interf;
+package com.cts.ecommerce.service.interf;
 
 import java.math.BigDecimal;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.cts.Ecommerce.dto.Response;
+import com.cts.ecommerce.dto.Response;
 
 public interface ProductService {
 
