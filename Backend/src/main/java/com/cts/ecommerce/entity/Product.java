@@ -1,4 +1,4 @@
-package com.cts.Ecommerce.entity;
+package com.cts.ecommerce.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
