@@ -221,7 +221,7 @@ public class CartServiceImpl implements CartService
         }
 
         @Override
-        public CartDto getCartByUser() {
+        public CartDto getCartByUser(Long userId) {
                 User user = userService.getLoginUser();
 
                 Cart cart = cartRepo.findByUserId(user.getId())
