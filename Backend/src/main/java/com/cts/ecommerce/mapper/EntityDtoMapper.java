@@ -22,10 +22,11 @@ import com.cts.ecommerce.entity.User;
 @Component
 public class EntityDtoMapper {
 
-    //user entity to user DTO
-
-    public UserDto mapUserToDtoBasic(User user){
+    // Maps a User entity to a UserDto with basic details
+    public UserDto mapUserToDtoBasic(User user) {
+    	
         UserDto userDto = new UserDto();
+        
         userDto.setId(user.getId());
         userDto.setPhoneNumber(user.getPhoneNumber());
         userDto.setEmail(user.getEmail());
@@ -35,9 +36,11 @@ public class EntityDtoMapper {
 
     }
 
-    //Address to DTO Basic
-    public AddressDto mapAddressToDtoBasic(Address address){
+    // Maps an Address entity to an AddressDto with basic details
+    public AddressDto mapAddressToDtoBasic(Address address) {
+    	
         AddressDto addressDto = new AddressDto();
+        
         addressDto.setId(address.getId());
         addressDto.setCity(address.getCity());
         addressDto.setStreet(address.getStreet());
@@ -47,18 +50,22 @@ public class EntityDtoMapper {
         return addressDto;
     }
 
-    //Category to DTO basic
-    public CategoryDto mapCategoryToDtoBasic(Category category){
+    // Maps a Category entity to a CategoryDto with basic details
+    public CategoryDto mapCategoryToDtoBasic(Category category) {
+    	
         CategoryDto categoryDto = new CategoryDto();
+        
         categoryDto.setId(category.getId());
         categoryDto.setName(category.getName());
         return categoryDto;
     }
 
 
-    //OrderItem to DTO Basics
-    public OrderItemDto mapOrderItemToDtoBasic(OrderItem orderItem){
+    // Maps an OrderItem entity to an OrderItemDto with basic details
+    public OrderItemDto mapOrderItemToDtoBasic(OrderItem orderItem) {
+    	
         OrderItemDto orderItemDto = new OrderItemDto();
+        
         orderItemDto.setId(orderItem.getId());
         orderItemDto.setQuantity(orderItem.getQuantity());
         orderItemDto.setPrice(orderItem.getPrice());
@@ -67,38 +74,39 @@ public class EntityDtoMapper {
         return orderItemDto;
     }
 
- // Product to DTO Basic
+    // Maps a Product entity to a ProductDto with basic details
     public ProductDto mapProductToDtoBasic(Product product) {
+    	
         ProductDto productDto = new ProductDto();
+        
         productDto.setId(product.getId());
         productDto.setName(product.getName());
         productDto.setDiscount(product.getDiscount());
         productDto.setDescription(product.getDescription());
         productDto.setPrice(product.getPrice());
-        productDto.setImageData(product.getImageUrl()); // Add this line
+        productDto.setImageData(product.getImageUrl());
         return productDto;
     }
-
-    public CartDto mapCartToDto(Cart cart) 
-    {
+    
+    // Maps a Cart entity to a CartDto
+    public CartDto mapCartToDto(Cart cart) {
         CartDto cartDto = new CartDto();
 
         cartDto.setCartId(cart.getCartId());
         cartDto.setTotalPrice(cart.getTotalPrice());
 
-        if (cart.getCartItemList() != null && !cart.getCartItemList().isEmpty()) 
-        {
+        // Checks if the cart has any cart items and maps them to CartItemDto
+        if (cart.getCartItemList() != null && !cart.getCartItemList().isEmpty()) {
             List<CartItemDto> cartItemDtoList = cart.getCartItemList().stream()
                         .map(this::mapCartItemToDto)
                         .collect(Collectors.toList());
             cartDto.setCartItemList(cartItemDtoList);
         }
-
         return cartDto;
     }
 
-    public CartItemDto mapCartItemToDto(CartItem cartItem) 
-    {
+    // Maps a CartItem entity to a CartItemDto
+    public CartItemDto mapCartItemToDto(CartItem cartItem) {
             CartItemDto cartItemDto = new CartItemDto();
 
             cartItemDto.setCartItemId(cartItem.getCartItemId());
@@ -106,32 +114,34 @@ public class EntityDtoMapper {
             cartItemDto.setDiscount(cartItem.getDiscount());
             cartItemDto.setProductPrice(cartItem.getProductPrice());
 
-            if (cartItem.getProduct() != null) 
-            {
+            // Checks if the cart item has an associated product and maps it to ProductDto
+            if (cartItem.getProduct() != null) {
                 cartItemDto.setProduct(mapProductToDtoBasic(cartItem.getProduct()));
             }
-
             return cartItemDto;
     }
 
-    public UserDto mapUserToDtoPlusAddress(User user){
+    // Maps a User entity to a UserDto with address details
+    public UserDto mapUserToDtoPlusAddress(User user) {
 
-        System.out.println("mapUserToDtoPlusAddress is called");
+        System.out.println("mapUserToDtoPlusAddress is called"); // Logging...
+        
         UserDto userDto = mapUserToDtoBasic(user);
+        
+        // Checks if the user has an associated address and maps it to AddressDto
         if (user.getAddress() != null){
-
             AddressDto addressDto = mapAddressToDtoBasic(user.getAddress());
             userDto.setAddress(addressDto);
-
         }
         return userDto;
     }
 
 
-    //orderItem to DTO plus product
-    public OrderItemDto mapOrderItemToDtoPlusProduct(OrderItem orderItem){
+    // Maps an OrderItem entity to an OrderItemDto with product details
+    public OrderItemDto mapOrderItemToDtoPlusProduct(OrderItem orderItem) {
         OrderItemDto orderItemDto = mapOrderItemToDtoBasic(orderItem);
 
+        // Checks if the order item has an associated product and maps it to ProductDto
         if (orderItem.getProduct() != null) {
             ProductDto productDto = mapProductToDtoBasic(orderItem.getProduct());
             orderItemDto.setProduct(productDto);
@@ -140,11 +150,12 @@ public class EntityDtoMapper {
     }
 
 
-    //OrderItem to DTO plus product and user
-    public OrderItemDto mapOrderItemToDtoPlusProductAndUser(OrderItem orderItem){
+    // Maps an OrderItem entity to an OrderItemDto with product and user details
+    public OrderItemDto mapOrderItemToDtoPlusProductAndUser(OrderItem orderItem) {
         OrderItemDto orderItemDto = mapOrderItemToDtoPlusProduct(orderItem);
 
-        if (orderItem.getUser() != null){
+        // Checks if the order item has an associated user and maps it to UserDto
+        if (orderItem.getUser() != null) {
             UserDto userDto = mapUserToDtoPlusAddress(orderItem.getUser());
             orderItemDto.setUser(userDto);
         }
@@ -152,10 +163,11 @@ public class EntityDtoMapper {
     }
 
 
-    //USer to DTO with Address and Order Items History
+    // Maps a User entity to a UserDto with address and order history details
     public UserDto mapUserToDtoPlusAddressAndOrderHistory(User user) {
         UserDto userDto = mapUserToDtoPlusAddress(user);
 
+        // Checks if the user has an order history and maps each order item to OrderItemDto
         if (user.getOrderItemList() != null && !user.getOrderItemList().isEmpty()) {
             userDto.setOrderItemList(user.getOrderItemList()
                     .stream()
@@ -163,6 +175,6 @@ public class EntityDtoMapper {
                     .collect(Collectors.toList()));
         }
         return userDto;
-
     }
+    
 }
