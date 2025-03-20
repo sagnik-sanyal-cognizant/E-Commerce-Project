@@ -11,11 +11,15 @@ import com.cts.ecommerce.entity.User;
 import java.util.Collection;
 import java.util.List;
 
+// AuthUser is a custom implementation of UserDetails used for Spring Security authentication
+// It wraps a User entity and provides the necessary methods for authentication and authorization
 @Data
 @Builder
 public class AuthUser implements UserDetails {
 
     private User user;
+    
+    // @return returns a collection of granted authorities to the user.
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(user.getRole().name()));
