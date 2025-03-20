@@ -4,8 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import com.cts.ecommerce.dto.*;
 import com.cts.ecommerce.entity.*;
@@ -16,7 +14,8 @@ import com.cts.ecommerce.repository.*;
 import com.cts.ecommerce.service.interf.*;
 import com.cts.ecommerce.specification.OrderItemSpecification;
 
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -28,14 +27,13 @@ import java.util.stream.Collectors;
 @Slf4j
 public class OrderItemServiceImpl implements OrderItemService {
 
-
     private final OrderRepo orderRepo;
     private final OrderItemRepo orderItemRepo;
     private final ProductRepo productRepo;
     private final UserService userService;
     private final EntityDtoMapper entityDtoMapper;
 
-
+    // Places an order based on the provided order request
     @Override
     public Response placeOrder(OrderRequest orderRequest) {
 
@@ -66,7 +64,7 @@ public class OrderItemServiceImpl implements OrderItemService {
         order.setOrderItemList(orderItems);
         order.setTotalPrice(totalPrice);
 
-        //set the order reference in each orderitem
+        //set the order reference in each OrderItem
         orderItems.forEach(orderItem -> orderItem.setOrder(order));
 
         orderRepo.save(order);
@@ -77,7 +75,8 @@ public class OrderItemServiceImpl implements OrderItemService {
                 .build();
 
     }
-
+    
+    // Updates the status of an order item
     @Override
     public Response updateOrderItemStatus(Long orderItemId, String status) {
         OrderItem orderItem = orderItemRepo.findById(orderItemId)
@@ -90,7 +89,8 @@ public class OrderItemServiceImpl implements OrderItemService {
                 .message("Order status updated successfully")
                 .build();
     }
-
+    
+    // Filters order items based on the provided criteria
     @Override
     public Response filterOrderItems(OrderStatus status, LocalDateTime startDate, LocalDateTime endDate, Long itemId, Pageable pageable) {
         Specification<OrderItem> spec = Specification.where(OrderItemSpecification.hasStatus(status))
@@ -99,7 +99,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 
         Page<OrderItem> orderItemPage = orderItemRepo.findAll(spec, pageable);
 
-        if (orderItemPage.isEmpty()){
+        if (orderItemPage.isEmpty()) {
             throw new NotFoundException("No Order Found");
         }
         List<OrderItemDto> orderItemDtos = orderItemPage.getContent().stream()

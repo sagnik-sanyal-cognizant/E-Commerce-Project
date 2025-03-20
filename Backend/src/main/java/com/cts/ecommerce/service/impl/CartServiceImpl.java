@@ -1,5 +1,8 @@
 package com.cts.ecommerce.service.impl;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cts.ecommerce.dto.CartDto;
 import com.cts.ecommerce.dto.CartItemDto;
@@ -16,9 +19,7 @@ import com.cts.ecommerce.repository.CartRepo;
 import com.cts.ecommerce.repository.ProductRepo;
 import com.cts.ecommerce.service.interf.CartService;
 import com.cts.ecommerce.service.interf.UserService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,21 +46,18 @@ public class CartServiceImpl implements CartService
     private EntityDtoMapper entityDtoMapper;
 
         @Override
-        public Response addToCart(Long productId) 
-        {
+        public Response addToCart(Long productId) {
                 User user = userService.getLoginUser();
 
                 Product product = productRepo.findById(productId)
                         .orElseThrow(() -> new NotFoundException("Product not found"));
                 
-                if(product.getQuantity()<=0)
-                {
+                if(product.getQuantity()<=0) {
                         throw new NotFoundException("Product "+product.getName() +"is not available");
                 }
 
                 // Retrieve the user's cart or create a new one if it doesn't exist
-                Cart cart = cartRepo.findByUserId(user.getId()).orElseGet(() -> 
-                {
+                Cart cart = cartRepo.findByUserId(user.getId()).orElseGet(() -> {
                         Cart newCart = new Cart();
 
                         newCart.setUser(user);
@@ -70,49 +68,41 @@ public class CartServiceImpl implements CartService
                 });
         
                 // Check if the product already exists in the cart
-                //If present return the existing cart object
                 CartItem existingCartItem = cart.getCartItemList().stream()
                         .filter(item -> item.getProduct().getId().equals(productId))
                         .findFirst()
                         .orElse(null);
                 
-                if (existingCartItem != null) 
-                {
+                if (existingCartItem != null) {
                         return Response.builder()
                         .status(200)
                         .message("Item already added to the cart. If needed, please update it.")
                         .build(); 
-                } 
-                 else 
-                {
-                // Add the product as a new cart item
-                CartItem newCartItem = new CartItem();
+                } else {
                 
-                newCartItem.setCart(cart);
-                newCartItem.setProduct(product);
-                newCartItem.setQuantity(1);
-                newCartItem.setDiscount(product.getDiscount());
-                newCartItem.setProductPrice
-                (
+                	CartItem newCartItem = new CartItem(); // Add the product as a new cart item
+                
+                	newCartItem.setCart(cart);
+                	newCartItem.setProduct(product);
+                	newCartItem.setQuantity(1);
+	                newCartItem.setDiscount(product.getDiscount());
+	                newCartItem.setProductPrice (
                         product.getPrice().doubleValue() * (1 - product.getDiscount() / 100)
-                );
+	                );
                 
-                cartItemRepo.save(newCartItem);
-                
-                cart.getCartItemList().add(newCartItem);
+	                cartItemRepo.save(newCartItem);
+	                cart.getCartItemList().add(newCartItem);
                 }
         
-                // Update the cart's total price
-                String res=updateCartTotalPrice(cart);
+                String res=updateCartTotalPrice(cart); // Update the cart's total price
         
                 return Response.builder()
                         .status(200)
-                        .message("Product added to cart ")
+                        .message("Product added to cart "+res)
                         .build();
         }
     
-        public Response updateCartItemByQuantity(Long cartItemId, Long productId)
-        {
+        public Response updateCartItemByQuantity(Long cartItemId, Long productId) {
                 User user = userService.getLoginUser();
 
                 // Fetch the CartItem and validate it belongs to the user
@@ -120,9 +110,9 @@ public class CartServiceImpl implements CartService
                         .orElseThrow(() -> new NotFoundException("Cart item not found"));
         
                 // Ensure the productId matches the cartItem's product and belongs to the logged-in user
+
                 if (!cartItem.getCart().getUser().getId().equals(user.getId()) || 
-                !cartItem.getProduct().getId().equals(productId))
-                {
+                !cartItem.getProduct().getId().equals(productId)) {
                         throw new UnauthorizedException("Invalid cart item or product for the logged-in user");
                 }
         
@@ -130,16 +120,14 @@ public class CartServiceImpl implements CartService
                 Product product = productRepo.findById(productId)
                         .orElseThrow(() -> new NotFoundException("Product not found"));
                 
-                if(product.getQuantity()<=0)
-                {
+                if(product.getQuantity()<=0) {
                         throw new NotFoundException("Product "+product.getName() +"is not available");
                 }
 
                 // Increment the quantity and recalculate price
                 cartItem.setQuantity(cartItem.getQuantity() + 1);
                 cartItem.setDiscount(product.getDiscount());
-                cartItem.setProductPrice
-                (
+                cartItem.setProductPrice (
                         product.getPrice().doubleValue() * cartItem.getQuantity() * (1 - cartItem.getDiscount() / 100)
                 );
                 System.out.println("inside update service");
@@ -157,16 +145,14 @@ public class CartServiceImpl implements CartService
         }
     
         @Override
-        public Response removeCartItemByQuantity(Long cartItemId,Long productId)
-        {
+        public Response removeCartItemByQuantity(Long cartItemId,Long productId) {
                 User user = userService.getLoginUser();
                 
                 // Fetch the CartItem and validate it belongs to the user
                 CartItem cartItem = cartItemRepo.findById(cartItemId)
                         .orElseThrow(() -> new NotFoundException("Cart item not found"));
 
-                if(cartItem.getQuantity()==1)
-                {
+                if(cartItem.getQuantity()==1) {
                         Cart cart=cartItem.getCart();
                         cart.getCartItemList().remove(cartItem);
                         
@@ -182,8 +168,7 @@ public class CartServiceImpl implements CartService
         
                 // Ensure the productId matches the cartItem's product and belongs to the logged-in user
                 if (!cartItem.getCart().getUser().getId().equals(user.getId()) || 
-                !cartItem.getProduct().getId().equals(productId)) 
-                {
+                !cartItem.getProduct().getId().equals(productId)) {
                         throw new UnauthorizedException("Invalid cart item or product for the logged-in user");
                 }
         
@@ -191,16 +176,14 @@ public class CartServiceImpl implements CartService
                 Product product = productRepo.findById(productId)
                         .orElseThrow(() -> new NotFoundException("Product not found"));
                 
-                if(cartItem.getQuantity()<=0)
-                {
+                if(cartItem.getQuantity()<=0) {
                         throw new NotFoundException("CartItem is removed from the cart");
                 }
 
                 // Increment the quantity and recalculate price
                 cartItem.setQuantity(cartItem.getQuantity() - 1);
                 cartItem.setDiscount(product.getDiscount());
-                cartItem.setProductPrice
-                (
+                cartItem.setProductPrice (
                         product.getPrice().doubleValue() * cartItem.getQuantity() * (1 - cartItem.getDiscount() / 100)
                 );
                 
@@ -221,8 +204,7 @@ public class CartServiceImpl implements CartService
         }
 
         @Override
-        public Response removeCartItem(Long cartItemId) 
-        {
+        public Response removeCartItem(Long cartItemId) {
                 CartItem cartItem = cartItemRepo.findById(cartItemId)
                         .orElseThrow(() -> new NotFoundException("Cart item not found"));
 
@@ -239,8 +221,7 @@ public class CartServiceImpl implements CartService
         }
 
         @Override
-        public CartDto getCartByUser() 
-        {
+        public CartDto getCartByUser() {
                 User user = userService.getLoginUser();
 
                 Cart cart = cartRepo.findByUserId(user.getId())
@@ -250,14 +231,12 @@ public class CartServiceImpl implements CartService
         }
 
         @Override
-        public List<CartItemDto> searchCartItemsByProductName(String productName) 
-        {
+        public List<CartItemDto> searchCartItemsByProductName(String productName) {
                 User user = userService.getLoginUser();
                
                 List<CartItem> cartItems = cartItemRepo.findCartItemsByProductName(user.getId(), productName);
 
-                if (cartItems.isEmpty()) 
-                {
+                if (cartItems.isEmpty()) {
                         throw new NotFoundException("No products found in the cart with the name: " + productName);
                 }
 
@@ -266,20 +245,14 @@ public class CartServiceImpl implements CartService
                         .collect(Collectors.toList());
         }
 
-        private String updateCartTotalPrice(Cart cart) 
-        {
+        private String updateCartTotalPrice(Cart cart) {
                 BigDecimal totalPrice = BigDecimal.ZERO;
 
                 StringBuilder logDetails = new StringBuilder();
 
-                int size=cart.getCartItemList().size();
-
-                for (CartItem cartItem : cart.getCartItemList()) 
-                {
-                        logDetails.append("Inside total price for loop ===="+size);
+                for (CartItem cartItem : cart.getCartItemList()) {
                 
-                        if (cartItem != null && cartItem.getProductPrice() != 0) 
-                        {
+                        if (cartItem != null && cartItem.getProductPrice() != 0) {
                                 double productPrice = cartItem.getProductPrice();
                                 logDetails.append(" Print product price: ").append(productPrice).append(" ");
                                 totalPrice = totalPrice.add(BigDecimal.valueOf(productPrice));
@@ -293,4 +266,3 @@ public class CartServiceImpl implements CartService
         }
         
 }
-
