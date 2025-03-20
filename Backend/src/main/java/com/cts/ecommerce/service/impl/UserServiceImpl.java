@@ -20,7 +20,7 @@ import com.cts.ecommerce.repository.UserRepo;
 import com.cts.ecommerce.security.JwtUtils;
 import com.cts.ecommerce.service.interf.UserService;
 
-import java.util.*;
+import java.util.*;;
 
 
 @Service
@@ -34,11 +34,12 @@ public class UserServiceImpl implements UserService {
     private final JwtUtils jwtUtils;
     private final EntityDtoMapper entityDtoMapper;
 
-
+    // Registers a new user
     @Override
     public Response registerUser(UserDto registrationRequest) {
         UserRole role = UserRole.USER;
-
+        
+        // Checks if the role is provided and sets it to ADMIN if specified
         if (registrationRequest.getRole() != null && registrationRequest.getRole().equalsIgnoreCase("admin")) {
             role = UserRole.ADMIN;
         }
@@ -62,12 +63,13 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
-
-
+    // Logs in a user
     @Override
     public Response loginUser(LoginRequest loginRequest) {
-
+    	
+    	// Retrieves the user by email and throws NotFoundException if not found
         User user = userRepo.findByEmail(loginRequest.getEmail()).orElseThrow(()-> new NotFoundException("Email not found"));
+        // Checks if the provided password matches the user's password
         if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())){
             throw new InvalidCredentialsException("Password does not match");
         }
@@ -81,7 +83,8 @@ public class UserServiceImpl implements UserService {
                 .role(user.getRole().name())
                 .build();
     }
-
+    
+    // Retrieves all users
     @Override
     public Response getAllUsers() {
 
@@ -95,16 +98,19 @@ public class UserServiceImpl implements UserService {
                 .userList(userDtos)
                 .build();
     }
-
+    
+    // Retrieves the currently logged-in user
     @Override
     public User getLoginUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String  email = authentication.getName();
         log.info("User Email is: " + email);
+        // Retrieves the user by email and throws UsernameNotFoundException if not found
         return userRepo.findByEmail(email)
                 .orElseThrow(()-> new UsernameNotFoundException("User Not found"));
     }
 
+    // Retrieves the current user's information and order history
     @Override
     public Response getUserInfoAndOrderHistory() {
         User user = getLoginUser();
