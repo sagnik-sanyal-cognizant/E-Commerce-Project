@@ -15,17 +15,21 @@ import com.cts.ecommerce.service.interf.UserService;
 @RequiredArgsConstructor
 public class UserController {
 
+	// UserService is injected to handle the business logic for user operations
     private final UserService userService;
-
 
     @GetMapping("/get-all")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Response> getAllUsers(){
+    	
+    	// Calls the user service to retrieve all users and returns the response
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping("/my-info")
     public ResponseEntity<Response> getUserInfoAndOrderHistory(){
+    	
+    	// Calls the user service to retrieve the current user's information and order history and returns the response
         return ResponseEntity.ok(userService.getUserInfoAndOrderHistory());
     }
 }

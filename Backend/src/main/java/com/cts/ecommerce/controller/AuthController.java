@@ -19,15 +19,20 @@ import jakarta.validation.Valid;
 @RequiredArgsConstructor
 public class AuthController {
 
+	// UserService is injected to handle the business logic for user operations
     private final UserService userService;
 
     @PostMapping("/register")
     public ResponseEntity<Response> registerUser(@Valid @RequestBody UserDto registrationRequest){
-        System.out.println(registrationRequest);
+        System.out.println(registrationRequest); // Logging..
+        
+        // Calls the user service to register the user and returns the response
         return ResponseEntity.ok(userService.registerUser(registrationRequest));
     }
     @PostMapping("/login")
     public ResponseEntity<Response> loginUser(@Valid @RequestBody LoginRequest loginRequest){
-        return ResponseEntity.ok(userService.loginUser(loginRequest));
+        
+    	// Calls the user service to login the user and returns the response
+    	return ResponseEntity.ok(userService.loginUser(loginRequest));
     }
 }

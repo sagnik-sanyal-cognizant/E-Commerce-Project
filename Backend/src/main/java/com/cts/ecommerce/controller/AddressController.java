@@ -18,10 +18,13 @@ import jakarta.validation.Valid;
 @RequiredArgsConstructor
 public class AddressController {
 
+	// AddressService is injected to handle the business logic for address operations
     private final AddressService addressService;
 
     @PostMapping("/save")
     public ResponseEntity<Response> saveAndUpdateAddress(@Valid @RequestBody AddressDto addressDto){
-        return ResponseEntity.ok(addressService.saveAndUpdateAddress(addressDto));
+    	
+    	// Calls the address service to save or update the address and returns the response
+    	return ResponseEntity.ok(addressService.saveAndUpdateAddress(addressDto));
     }
 }
