@@ -19,6 +19,8 @@ import static org.mockito.Mockito.*;
 
 class UserServiceImplTest {
 
+	// Injecting all Mock Classes of real class for testing purpose
+	
     @InjectMocks
     private UserServiceImpl userService;
 
@@ -31,14 +33,16 @@ class UserServiceImplTest {
     @Mock
     private EntityDtoMapper entityDtoMapper;
 
+    // Sets up the test environment before each test
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
+    // Tests the successful registration of a user
     @Test
     void testRegisterUserSuccess() {
-        // Arrange
+    	// Arrange - Sets up the mock data and behavior for the test
         UserDto registrationRequest = new UserDto();
         registrationRequest.setName("Sagnik Sanyal");
         registrationRequest.setEmail("sagniktesting@email.com");
@@ -58,10 +62,10 @@ class UserServiceImplTest {
         when(userRepo.save(any(User.class))).thenReturn(user);
         when(entityDtoMapper.mapUserToDtoBasic(user)).thenReturn(registrationRequest);
 
-        // Collecting response
+        // Act - Calls the registerUser method of the userServic
         Response response = userService.registerUser(registrationRequest);
 
-        // Assert
+        // Assert - Verifies the response and interactions with the userRepo
         assertEquals(200, response.getStatus());
         assertEquals("User Successfully Added", response.getMessage());
         verify(userRepo, times(1)).save(any(User.class));

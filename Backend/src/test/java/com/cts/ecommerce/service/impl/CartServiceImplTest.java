@@ -16,7 +16,6 @@ import java.util.Optional;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import com.cts.ecommerce.dto.Response;
 import com.cts.ecommerce.service.interf.UserService;
 import com.cts.ecommerce.entity.Cart;
@@ -24,7 +23,6 @@ import com.cts.ecommerce.entity.CartItem;
 import com.cts.ecommerce.entity.Product;
 import com.cts.ecommerce.entity.User;
 import com.cts.ecommerce.exception.NotFoundException;
-import com.cts.ecommerce.exception.UnauthorizedException;
 import com.cts.ecommerce.mapper.EntityDtoMapper;
 import com.cts.ecommerce.repository.CartItemRepo;
 import com.cts.ecommerce.repository.CartRepo;
@@ -61,8 +59,7 @@ public class CartServiceImplTest {
 
     //stubbing each methods
     @Test
-    public void addToCartTest()
-    {     
+    public void addToCartTest() {     
         long  productId=1L;
         int quantity=1;
         String name="";
@@ -70,7 +67,6 @@ public class CartServiceImplTest {
         BigDecimal price=new BigDecimal("2500");
         List<CartItem> cartItems=new ArrayList<>();
 
-       // CartServiceImpl cartServiceImplTest=new CartServiceImpl();
         cartItems.add(newCartItem);
         when(userService.getLoginUser()).thenReturn(user);
         when(productRepo.findById(productId)).thenReturn(Optional.of(product));
@@ -81,7 +77,6 @@ public class CartServiceImplTest {
         when(newCartItem.getProduct()).thenReturn(product);
         when(product.getId()).thenReturn(2L);
 
-        //Cart newCart=Mockito.mock(Cart.class);
         when(cart.getCartItemList()).thenReturn(cartItems);
         when(product.getPrice()).thenReturn(price);
         when(cartItemRepo.save(any())).thenReturn(newCartItem);
@@ -101,16 +96,13 @@ public class CartServiceImplTest {
     }
 
     @Test
-    public void addToItemExistingCartTest()
-    {     
+    public void addToItemExistingCartTest() {     
         long  productId=1L;
         int quantity=1;
         String name="";
         long id=0L;
         BigDecimal price=new BigDecimal("2500");
         List<CartItem> cartItems=new ArrayList<>();
-
-        CartServiceImpl cartServiceImplTest=new CartServiceImpl();
 
         cartItems.add(newCartItem);
         when(userService.getLoginUser()).thenReturn(user);
@@ -121,8 +113,6 @@ public class CartServiceImplTest {
         when(user.getId()).thenReturn(id);
         when(newCartItem.getProduct()).thenReturn(product);
         when(product.getId()).thenReturn(1L);
-
-        Cart newCart=Mockito.mock(Cart.class);
 
         when(cart.getCartItemList()).thenReturn(cartItems);
         when(product.getPrice()).thenReturn(price);
@@ -182,44 +172,43 @@ public class CartServiceImplTest {
         verify(userService, times(1)).getLoginUser();
         }   
         
-         @Test
-         public void removeCartTest() {
+        @Test
+        public void removeCartTest() {
 
-             // Arrange
-             Long cartItemId = 1L;
-             CartItem cartItem = new CartItem();
-             Cart cart = new Cart();
+            // Arrange
+            Long cartItemId = 1L;
+            CartItem cartItem = new CartItem();
+            Cart cart = new Cart();
+        
+            // Set up relationships
+            cartItem.setCart(cart);
+            cart.setCartItemList(new ArrayList<>(Arrays.asList(cartItem))); // Use Arrays.asList() for compatibility
+        
+            // Mock repository behavior
+            when(cartItemRepo.findById(cartItemId)).thenReturn(Optional.of(cartItem));
+        
+            // Act
+            Response response = cartServiceImpl.removeCartItem(cartItemId);
+        
+            // Assert
+            assertEquals(200, response.getStatus());
+            assertEquals("Cart item removed", response.getMessage());
+            verify(cartItemRepo).delete(cartItem); // Verify delete method called
+            assertTrue(cart.getCartItemList().isEmpty()); // Verify cart item removed from list
+        }
          
-             // Set up relationships
-             cartItem.setCart(cart);
-             cart.setCartItemList(new ArrayList<>(Arrays.asList(cartItem))); // Use Arrays.asList() for compatibility
-         
-             // Mock repository behavior
-             when(cartItemRepo.findById(cartItemId)).thenReturn(Optional.of(cartItem));
-         
-             // Act
-             Response response = cartServiceImpl.removeCartItem(cartItemId);
-         
-             // Assert
-             assertEquals(200, response.getStatus());
-             assertEquals("Cart item removed", response.getMessage());
-             verify(cartItemRepo).delete(cartItem); // Verify delete method called
-             assertTrue(cart.getCartItemList().isEmpty()); // Verify cart item removed from list
-         }
-         
-         @Test
-         void testRemoveCartItem_NotFound() 
-         {
-             // Arrange
-             Long cartItemId = 1L;
+        @Test
+        void testRemoveCartItem_NotFound() {
+            // Arrange
+            Long cartItemId = 1L;
      
-             when(cartItemRepo.findById(cartItemId)).thenReturn(Optional.empty());
+            when(cartItemRepo.findById(cartItemId)).thenReturn(Optional.empty());
      
-             // Act & Assert
-             Exception exception = assertThrows(NotFoundException.class, () -> {
-                 cartServiceImpl.removeCartItem(cartItemId);
-             });
-             assertEquals("Cart item not found", exception.getMessage());
-         }
- }
+            // Act & Assert
+            Exception exception = assertThrows(NotFoundException.class, () -> {
+                cartServiceImpl.removeCartItem(cartItemId);
+            });
+            assertEquals("Cart item not found", exception.getMessage());
+        }
+}
       
