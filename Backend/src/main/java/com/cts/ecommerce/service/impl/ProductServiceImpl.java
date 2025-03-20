@@ -59,7 +59,7 @@ public class ProductServiceImpl implements ProductService {
 
     // Updates an existing product
     @Override
-    public Response updateProduct(Long productId, Long categoryId, MultipartFile image, String name, String description, BigDecimal price) {
+    public Response updateProduct(Long productId, Long categoryId, MultipartFile image, String name, Integer quantity, String description, BigDecimal price) {
         
     	// Retrieves the product by ID and throws NotFoundException if not found
     	Product product = productRepo.findById(productId).orElseThrow(() -> new NotFoundException("Product Not Found"));
@@ -71,6 +71,7 @@ public class ProductServiceImpl implements ProductService {
 
         if (category != null) product.setCategory(category);
         if (name != null) product.setName(name);
+        if (quantity != null) product.setQuantity(quantity);
         if (price != null) product.setPrice(price);
         if (description != null) product.setDescription(description);
         if (image != null && !image.isEmpty()) {
