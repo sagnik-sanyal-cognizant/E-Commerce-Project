@@ -80,10 +80,22 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public Response updateOrderItemStatus(Long orderItemId, String status) {
         OrderItem orderItem = orderItemRepo.findById(orderItemId)
-                .orElseThrow(()-> new NotFoundException("Order Item not found"));
+                .orElseThrow(() -> new NotFoundException("Order Item not found"));
 
-        orderItem.setStatus(OrderStatus.valueOf(status.toUpperCase()));
+        OrderStatus newStatus = OrderStatus.valueOf(status.toUpperCase());
+        orderItem.setStatus(newStatus);
+
+        // Adjust product quantity based on the new status
+        Product product = orderItem.getProduct();
+        if (newStatus == OrderStatus.DELIVERED) { // If delivered, then reduce quantity
+            product.setQuantity(product.getQuantity() - orderItem.getQuantity());
+        } else if (newStatus == OrderStatus.RETURNED) { // If returned, then increase quantity
+            product.setQuantity(product.getQuantity() + orderItem.getQuantity());
+        }
+
+        productRepo.save(product);
         orderItemRepo.save(orderItem);
+
         return Response.builder()
                 .status(200)
                 .message("Order status updated successfully")
