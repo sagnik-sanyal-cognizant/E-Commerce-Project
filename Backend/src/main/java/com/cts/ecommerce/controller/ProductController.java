@@ -48,12 +48,13 @@ public class ProductController {
             @RequestParam(required = false) Long categoryId,
             @RequestParam(required = false) MultipartFile image,
             @RequestParam(required = false) String name,
+            @RequestParam(required = false) Double discount,
             @RequestParam(required = false) Integer quantity,
             @RequestParam(required = false) String description,
             @RequestParam(required = false) BigDecimal price
     ) {
     	// Calls the product service to update the product and returns the response
-        return ResponseEntity.ok(productService.updateProduct(productId, categoryId, image, name, quantity, description, price));
+        return ResponseEntity.ok(productService.updateProduct(productId, categoryId, image, name, discount, quantity, description, price));
     }
 
     @DeleteMapping("/delete/{productId}")

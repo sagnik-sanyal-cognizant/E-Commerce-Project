@@ -9,7 +9,7 @@ import com.cts.ecommerce.dto.Response;
 public interface ProductService {
 
     Response createProduct(Long categoryId, MultipartFile image, String name,Double discount, Integer quantity, String description, BigDecimal price);
-    Response updateProduct(Long productId, Long categoryId, MultipartFile image, String name, Integer quantity, String description, BigDecimal price);
+    Response updateProduct(Long productId, Long categoryId, MultipartFile image, String name, Double discount, Integer quantity, String description, BigDecimal price);
     Response deleteProduct(Long productId);
     Response getProductById(Long productId);
     Response getAllProducts();
