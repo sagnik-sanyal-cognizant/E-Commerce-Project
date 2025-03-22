@@ -26,12 +26,12 @@ public class JwtUtils {
     private SecretKey key;
 
     @Value("${secretJwtString}") //Value in the application properties of 32characters
-    private String secreteJwtString; 
+    private String secretJwtString; 
 
     // Initializes the secret key for signing JWT tokens
     @PostConstruct
     private void init(){
-        byte[] keyBytes = secreteJwtString.getBytes(StandardCharsets.UTF_8);	
+        byte[] keyBytes = secretJwtString.getBytes(StandardCharsets.UTF_8);	
         this.key = new SecretKeySpec(keyBytes, "HmacSHA256");
     }
 
