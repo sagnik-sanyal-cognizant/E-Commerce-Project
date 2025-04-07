@@ -1,12 +1,15 @@
 package com.cts.ecommerce.controller;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cts.ecommerce.dto.Response;
+import com.cts.ecommerce.entity.Product;
 import com.cts.ecommerce.exception.InvalidCredentialsException;
 import com.cts.ecommerce.service.interf.ProductService;
 
@@ -77,6 +80,19 @@ public class ProductController {
         
     	// Calls the product service to retrieve all products and returns the response
     	return ResponseEntity.ok(productService.getAllProducts());
+    }
+
+
+    @GetMapping("/get-image/{productId}")
+    public ResponseEntity<byte[]> getImage(@PathVariable Long productId) {
+        Product product = productService.getProductEntityById(productId);
+        if (product != null && product.getImageUrl() != null) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.add(HttpHeaders.CONTENT_TYPE, "image/jpeg"); // Adjust content type based on your image format
+            return ResponseEntity.ok().headers(headers).body(product.getImageUrl());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/get-by-category-id/{categoryId}")

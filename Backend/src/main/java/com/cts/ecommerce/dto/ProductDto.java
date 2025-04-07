@@ -21,6 +21,6 @@ public class ProductDto {
     private Integer quantity;
     private Double discount;
     private BigDecimal price;
-    private byte[] imageData; // Add this field
+    private byte[] imageData;
     private CategoryDto category;
 }

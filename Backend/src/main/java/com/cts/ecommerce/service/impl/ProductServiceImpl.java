@@ -30,12 +30,9 @@ public class ProductServiceImpl implements ProductService {
     private final CategoryRepo categoryRepo;
     private final EntityDtoMapper entityDtoMapper;
 
-    // Creates a new product
     @Override
-    public Response createProduct(Long categoryId, MultipartFile image, String name,Double discount,Integer quantity,String description, BigDecimal price) {
-        
-    	// Retrieves the category by ID and throws NotFoundException if not found
-    	Category category = categoryRepo.findById(categoryId).orElseThrow(() -> new NotFoundException("Category not found"));
+    public Response createProduct(Long categoryId, MultipartFile image, String name, Double discount, Integer quantity, String description, BigDecimal price) {
+        Category category = categoryRepo.findById(categoryId).orElseThrow(() -> new NotFoundException("Category not found"));
 
         Product product = new Product();
         product.setCategory(category);
@@ -57,12 +54,9 @@ public class ProductServiceImpl implements ProductService {
                 .build();
     }
 
-    // Updates an existing product
     @Override
     public Response updateProduct(Long productId, Long categoryId, MultipartFile image, String name, Double discount, Integer quantity, String description, BigDecimal price) {
-        
-    	// Retrieves the product by ID and throws NotFoundException if not found
-    	Product product = productRepo.findById(productId).orElseThrow(() -> new NotFoundException("Product Not Found"));
+        Product product = productRepo.findById(productId).orElseThrow(() -> new NotFoundException("Product Not Found"));
 
         Category category = null;
         if (categoryId != null) {
@@ -90,12 +84,9 @@ public class ProductServiceImpl implements ProductService {
                 .build();
     }
 
-    // Deletes a product by its ID
     @Override
     public Response deleteProduct(Long productId) {
-        
-    	// Retrieves the product by ID and throws NotFoundException if not found
-    	Product product = productRepo.findById(productId).orElseThrow(() -> new NotFoundException("Product Not Found"));
+        Product product = productRepo.findById(productId).orElseThrow(() -> new NotFoundException("Product Not Found"));
         productRepo.delete(product);
 
         return Response.builder()
@@ -103,12 +94,9 @@ public class ProductServiceImpl implements ProductService {
                 .message("Product deleted successfully")
                 .build();
     }
-    
-    // Retrieves a product by its ID
+
     @Override
     public Response getProductById(Long productId) {
-    	
-    	// Retrieves the product by ID and throws NotFoundException if not found
         Product product = productRepo.findById(productId).orElseThrow(() -> new NotFoundException("Product Not Found"));
         ProductDto productDto = entityDtoMapper.mapProductToDtoBasic(product);
 
@@ -117,8 +105,12 @@ public class ProductServiceImpl implements ProductService {
                 .product(productDto)
                 .build();
     }
-    
-    // Retrieves all products
+
+    @Override
+    public Product getProductEntityById(Long productId) {
+        return productRepo.findById(productId).orElseThrow(() -> new NotFoundException("Product Not Found"));
+    }
+
     @Override
     public Response getAllProducts() {
         List<ProductDto> productList = productRepo.findAll(Sort.by(Sort.Direction.DESC, "id"))
@@ -132,11 +124,9 @@ public class ProductServiceImpl implements ProductService {
                 .build();
     }
 
-    // Retrieves products by their category ID
     @Override
     public Response getProductsByCategory(Long categoryId) {
         List<Product> products = productRepo.findByCategoryId(categoryId);
-        // Checks if the products list is empty and throws NotFoundException if no products are found
         if (products.isEmpty()) {
             throw new NotFoundException("No Products found for this category");
         }
@@ -150,12 +140,9 @@ public class ProductServiceImpl implements ProductService {
                 .build();
     }
 
-    // Searches for products by their name or description
     @Override
     public Response searchProduct(String searchValue) {
         List<Product> products = productRepo.findByNameContainingOrDescriptionContaining(searchValue, searchValue);
-        
-        // Checks if the products list is empty and throws NotFoundException if no products are found
         if (products.isEmpty()) {
             throw new NotFoundException("No Products Found");
         }
