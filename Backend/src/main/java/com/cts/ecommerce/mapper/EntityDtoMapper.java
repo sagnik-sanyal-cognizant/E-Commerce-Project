@@ -88,7 +88,7 @@ public class EntityDtoMapper {
         return productDto;
     }
     
-    // Maps a Cart entity to a CartDto
+ // Maps a Cart entity to a CartDto
     public CartDto mapCartToDto(Cart cart) {
         CartDto cartDto = new CartDto();
 

@@ -67,14 +67,14 @@ public class Product {
                 Objects.equals(category, product.category);
     }
 
-    // hashCode method
+    // hashCode method excluding createdAt from hashCode
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, imageUrl, price, category);  // Excluding createdAt from hashCode
+        return Objects.hash(id, name, description, imageUrl, price, category);
     }
 
-    // canEqual method
+    // canEqual method comparing only Product instances or subclasses
     public boolean canEqual(Object other) {
-        return other instanceof Product;  // Only Product instances or subclasses can be compared
+        return other instanceof Product;  
     }
 }
