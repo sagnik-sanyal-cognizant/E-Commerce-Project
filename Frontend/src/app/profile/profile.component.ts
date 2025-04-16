@@ -40,7 +40,7 @@ export class ProfileComponent implements OnInit {
   fetchUserAddress(userId: string): void {
     this.apiService.getAddressByUserId(userId).subscribe({
       next: (addresses) => {
-        this.userInfo.address = addresses[0]; // Assuming you only need the first address
+        this.userInfo.address = addresses[0];
       },
       error: (error) => {
         console.log(error);
@@ -50,9 +50,7 @@ export class ProfileComponent implements OnInit {
   }
 
   handleAddressClick(): void {
-    const urlPathToNavigateTo = this.userInfo?.address
-      ? '/edit-address'
-      : '/add-address';
+    const urlPathToNavigateTo = this.userInfo?.address? '/edit-address': '/add-address';
     this.router.navigate([urlPathToNavigateTo], {
       state: { address: this.userInfo.address },
     });

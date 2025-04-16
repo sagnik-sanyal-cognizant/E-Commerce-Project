@@ -1,60 +1,64 @@
 <div class="profile">
-    <h2>Welcome {{ userInfo?.name}}</h2>
-  
-    <ng-container *ngIf="error; else profileContent">
-        <p class="error">{{error}}</p>
-    </ng-container>
-  
-    <ng-template #profileContent>
-        <div *ngIf="userInfo">
-            <p><strong>Name: </strong>{{userInfo.name}}</p>
-            <p><strong>Email: </strong>{{userInfo.email}}</p>
-            <p><strong>Phone Number: </strong>{{userInfo.phoneNumber}}</p>
-  
-            <div>
-                <h3>Address</h3>
-                <div *ngIf="userInfo.address; else noAddress">
-                    <p class="distEven">
-                      <strong>Street:</strong>{{userInfo.address.street}}
-                      <strong>City:</strong>{{userInfo.address.city}}
-                    </p>
-                    <p class="distEven">
-                      <strong>State:</strong>{{userInfo.address.state}}
-                      <strong>Zip Code:</strong>{{userInfo.address.zipCode}}
-                      <strong>Country:</strong>{{userInfo.address.country}}
-                    </p>
-                </div>
-  
-                <ng-template #noAddress>
-                    <p>No Address Available</p>
-                </ng-template>
-  
-                <button class="profile-button" (click)="handleAddressClick()">
-                    {{userInfo.address ? 'Edit Address' : 'Add Address'}}
-                </button>
-            </div>
-  
-            <h3>Order History</h3>
-            <ul>
-                <li *ngFor="let order of paginatedOrders">
-                    <img [src]="convertImageDataToUrl(order.product?.imageData)" [alt]="order.product?.name" />
-                    <div>
-                        <p><strong>Name: </strong>{{order.product?.name}}</p>
-                        <p class="distEven">
-                          <strong>Status:</strong>{{order.status}}
-                          <strong>Quantity:</strong>{{order.quantity}}
-                          <strong>Price:</strong> ₹{{((order.product.price-order.product.discount) * order.quantity)}}
-                        </p>
-                        <p class="distEven">
-                          <strong>Ordered Date:</strong>{{ order.createdAt | date: 'dd/MM/yyyy' }}
-                          <strong> Ordered items will be delivered within 3 days!! </strong>
-                        </p>
-                    </div>
-                </li>
-  
-            </ul>
-            <app-pagination [currentPage]="currentPage" [totalPages]="totalPages" (pageChange)="onPageChange($event)">
-            </app-pagination>
+  <h2>Welcome {{ userInfo?.name }}</h2>
+
+  <ng-container *ngIf="error; else profileContent">
+    <p class="error">{{ error }}</p>
+  </ng-container>
+
+  <ng-template #profileContent>
+    <div *ngIf="userInfo">
+      <p><strong>Name: </strong>{{ userInfo.name }}</p>
+      <p><strong>Email: </strong>{{ userInfo.email }}</p>
+      <p><strong>Phone Number: </strong>{{ userInfo.phoneNumber }}</p>
+
+      <div>
+        <h3>Address</h3>
+        <div *ngIf="userInfo.address; else noAddress">
+          <p class="distEven">
+            <strong>Street:</strong>{{ userInfo.address.street }}
+            <strong>City:</strong>{{ userInfo.address.city }}
+          </p>
+          <p class="distEven">
+            <strong>State:</strong>{{ userInfo.address.state }}
+            <strong>Zip Code:</strong>{{ userInfo.address.zipCode }}
+            <strong>Country:</strong>{{ userInfo.address.country }}
+          </p>
         </div>
-    </ng-template>
-  </div>
+
+        <ng-template #noAddress>
+          <p>No Address Available</p>
+        </ng-template>
+
+        <button class="profile-button" (click)="handleAddressClick()">
+          {{ userInfo.address ? 'Edit Address' : 'Add Address' }}
+        </button>
+      </div>
+
+      <h3>Order History</h3>
+      <ul>
+        <li *ngFor="let order of paginatedOrders">
+          <img [src]="convertImageDataToUrl(order.product?.imageData)" [alt]="order.product?.name" />
+          <div>
+            <p><strong>Name: </strong>{{ order.product?.name }}</p>
+            <p class="distEven">
+              <strong>Status:</strong>{{ order.status }}
+              <strong>Quantity:</strong>{{ order.quantity }}
+              <strong>Price:</strong> ₹{{ ((order.product.price - order.product.discount) * order.quantity) }}
+            </p>
+            <p class="distEven">
+              <strong>Ordered Date:</strong>{{ order.createdAt | date: 'dd/MM/yyyy' }}
+              <strong *ngIf="['PENDING', 'CONFIRMED', 'SHIPPED'].includes(order.status); else deliveredMessage">
+                Ordered items will be delivered within 3 days!!
+              </strong>
+              <ng-template #deliveredMessage>
+                <strong>Already Delivered within time!! Thank you... </strong>
+              </ng-template>
+            </p>
+          </div>
+        </li>
+      </ul>
+      <app-pagination [currentPage]="currentPage" [totalPages]="totalPages" (pageChange)="onPageChange($event)">
+      </app-pagination>
+    </div>
+  </ng-template>
+</div>
