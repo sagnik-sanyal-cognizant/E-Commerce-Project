@@ -24,7 +24,6 @@ export class RegisterComponent {
 
   message: any = null;
 
-
   async handleSubmit() {
     if (!this.formData.email || !this.formData.name || !this.formData.phoneNumber || !this.formData.password) {
       this.showMessage("All fields are required")
@@ -42,8 +41,6 @@ export class RegisterComponent {
         this.showMessage(error.error?.message || error.message || 'unable to register');
     }
   }
-
-
 
   showMessage(message: string) {
     this.message = message;
