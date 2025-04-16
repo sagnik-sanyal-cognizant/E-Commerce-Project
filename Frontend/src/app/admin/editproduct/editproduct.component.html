@@ -4,7 +4,9 @@
 
   <input type="file" (change)="handleImageChange($event)">
   <img *ngIf="imageUrl" [src]="imageUrl" alt="product name">
+  <br>
 
+  <label>Category: </label>
   <select formControlName="categoryId">
       <option value="">Select Category</option>
       <option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</option>
