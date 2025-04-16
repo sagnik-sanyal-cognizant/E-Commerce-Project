@@ -38,7 +38,7 @@ input[type="file"] {
 button {
   width: 100%;
   padding: 15px;
-  background-color: #f68b1e;
+  background-color: #0d2a92;
   border: none;
   border-radius: 3px;
   color: #fff;
@@ -51,10 +51,10 @@ button {
   margin-bottom: 15px;
   padding: 10px;
   border-radius: 3px;
-  color: #f68b1e;
+  color: #0d2a92;
   text-align: center;
 }
 
 button:hover {
-  background-color: #b18961;
+  background-color: #5a8fd4;
 }

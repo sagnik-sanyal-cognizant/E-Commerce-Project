@@ -5,7 +5,7 @@ div{
 }
 p{
   margin-bottom: 20px;
-  color: #f68b1e;
+  color: #0d2a92;
 }
 h2{
   font-size: 2rem;
@@ -23,7 +23,7 @@ input.invalid{
 }
 button{
   padding: 10px 15px;
-  background-color: #f68b1e;
+  background-color: #0d2a92;
   color: #fff;
   border: none;
   border-radius: 5px;

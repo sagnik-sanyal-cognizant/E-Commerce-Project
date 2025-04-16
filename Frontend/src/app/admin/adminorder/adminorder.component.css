@@ -65,10 +65,10 @@ button{
   font-size: 14px;
   border: none;
   border-radius: 4px;
-  background-color: #f68b1e;
+  background-color: #0d2a92;
   color: #fff;
   cursor: pointer;
 }
 button:hover{
-  background-color: #d09356;
+  background-color: #5a8fd4;
 }
