@@ -1,61 +1,61 @@
 <div class="container">
-    <p *ngIf="message" class="message">{{message}}</p>
-    <h1>Order Details</h1>
-  
-    <ng-container *ngIf="orderItem.length; else loading">
-        <div *ngFor="let item of orderItem" class="item-details">
-            <div class="info">
-                <h1>Order Information</h1>
-                  <p class="distEven">
-                    <strong>Order item Id: </strong>{{item.id}}
-                    <strong>Quantity: </strong>{{item.quantity}}
-                  </p>
-                  <p class="distEven">
-                    <strong>Order status: </strong>{{item.status}}
-                    <strong>Date ordered: </strong>{{item.createdAt | date}}
-                  </p>
-            </div>
-  
-            <div class="info">
-                <h1>User Information</h1>
-                 <p><strong>Name: </strong>{{item.user.name}}</p>
-                 <p><strong>Email: </strong>{{item.user.email}}</p>
-                 <p><strong>Phone: </strong>{{item.user.phoneNumber}}</p>
-                 <p><strong>Role: </strong>{{item.user.role}}</p>
-            </div>
-            <div class="info">
-                <h1>User Address</h1>
+  <p *ngIf="message" class="message">{{message}}</p>
+  <h1>Order Details</h1>
+
+  <ng-container *ngIf="orderItem.length; else loading">
+      <div *ngFor="let item of orderItem" class="item-details">
+          <div class="info">
+              <h1>Order Information</h1>
                 <p class="distEven">
-                  <strong>Street: </strong>{{item.user.address?.street}}
-                  <strong>City: </strong>{{item.user.address?.city}}
+                  <strong>Order item Id: </strong>{{item.id}}
+                  <strong>Quantity: </strong>{{item.quantity}}
                 </p>
                 <p class="distEven">
-                  <strong>State: </strong>{{item.user.address?.state}}
-                  <strong>Coutry: </strong>{{item.user.address?.country}}
-                  <strong>Zip Code: </strong>{{item.user.address?.zipCode}}
+                  <strong>Order status: </strong>{{item.status}}
+                  <strong>Date ordered: </strong>{{item.createdAt | date}}
                 </p>
-            </div>
-            <div class="info">
-                <h1>Product Information</h1>
-                <img [src]="convertImageDataToUrl(item.product?.imageData)" [alt]="item.product?.name">
-                 <p><strong>Name: </strong>{{item.product?.name}}</p>
-                 <p><strong>Description: </strong>{{item.product?.description}}</p>
-                 <p><strong>Total Price: </strong>₹ {{(item.product?.price - item.product?.discount) * item.quantity}}</p>
-            </div>
-  
-            <div>
-                <h4>Change Status</h4>
-                <select [(ngModel)]="selectedStatus[item.id]">
-                    <option *ngFor="let status of OderStatus" [value]="status">
-                        {{status}}
-                    </option>
-                </select>
-                <button (click)="handleSubmitStatusChange(item.id)">Update Status</button>
-            </div>
-        </div>
-    </ng-container>
-  
-    <ng-template #loading>
-        <p>Loading ...</p>
-    </ng-template>
-  </div>
+          </div>
+
+          <div class="info">
+              <h1>User Information</h1>
+               <p><strong>Name: </strong>{{item.user.name}}</p>
+               <p><strong>Email: </strong>{{item.user.email}}</p>
+               <p><strong>Phone: </strong>{{item.user.phoneNumber}}</p>
+               <p><strong>Role: </strong>{{item.user.role}}</p>
+          </div>
+          <div class="info">
+              <h1>User Address</h1>
+              <p class="distEven">
+                <strong>Street: </strong>{{item.user.address?.street}}
+                <strong>City: </strong>{{item.user.address?.city}}
+              </p>
+              <p class="distEven">
+                <strong>State: </strong>{{item.user.address?.state}}
+                <strong>Coutry: </strong>{{item.user.address?.country}}
+                <strong>Zip Code: </strong>{{item.user.address?.zipCode}}
+              </p>
+          </div>
+          <div class="info">
+              <h1>Product Information</h1>
+              <img [src]="convertImageDataToUrl(item.product?.imageData)" [alt]="item.product?.name">
+               <p><strong>Name: </strong>{{item.product?.name}}</p>
+               <p><strong>Description: </strong>{{item.product?.description}}</p>
+               <p><strong>Total Price: </strong>₹ {{(item.product?.price - item.product?.discount) * item.quantity}}</p>
+          </div>
+
+          <div>
+              <h4>Change Status</h4>
+              <select [(ngModel)]="selectedStatus[item.id]">
+                  <option *ngFor="let status of OderStatus" [value]="status">
+                      {{status}}
+                  </option>
+              </select>
+              <button (click)="handleSubmitStatusChange(item.id)">Update Status</button>
+          </div>
+      </div>
+  </ng-container>
+
+  <ng-template #loading>
+      <p>Loading ...</p>
+  </ng-template>
+</div>
