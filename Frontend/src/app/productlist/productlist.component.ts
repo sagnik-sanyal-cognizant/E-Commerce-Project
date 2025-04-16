@@ -10,7 +10,7 @@ interface Product {
   quantity: number;
   discount: number;
   price: number;
-  imageData: string; // Assuming imageData is a base64 string
+  imageData: string;
 }
 
 @Component({
