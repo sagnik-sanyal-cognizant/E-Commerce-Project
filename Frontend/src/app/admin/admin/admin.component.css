@@ -1,34 +1,33 @@
 .admin {
-    text-align: center;
-    margin-top: 50px;
-  }
-  
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-  }
-  
+  text-align: center;
+  margin-top: 50px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+button {
+  display: inline-block;
+  margin: 10px;
+  padding: 20px;
+  font-size: 1.5rem;
+  background-color: #0d2a92;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #5a8fd4;
+}
+
+@media (max-width: 600px) {
   button {
-    display: inline-block;
-    margin: 10px;
-    padding: 20px;
-    font-size: 1.5rem;
-    background-color: #f88b2e;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    display: block;
+    width: 80%;
+    margin: 10px auto;
   }
-  
-  button:hover {
-    background-color: #d38b4c;
-  }
-  
-  @media (max-width: 600px) {
-    button {
-      display: block;
-      width: 80%;
-      margin: 10px auto;
-    }
-  }
-  
+}
