@@ -8,7 +8,7 @@
 }
 .message{
   text-align: center;
-  color: #f68b1e;
+  color: #0d2a92;
   margin-bottom: 20xp;
   font-size: 1.1rem;
 }
@@ -26,6 +26,10 @@ img{
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+#stripeLine {
+  text-decoration: line-through;
+  color: rgb(81, 77, 77);
+}
 .empty-cart-image {
   display: block;
   margin: 0 auto;
@@ -53,7 +57,7 @@ img{
   margin-top: 10px;
 }
 .controls button{
-  background-color: #f68b1e;
+  background-color: #0d2a92;
   color: #fff;
   border: none;
   padding: 5px 10px;
@@ -63,7 +67,7 @@ img{
   transition: background-color 0.3s;
 }
 .controls button:hover{
-  background-color: #c99969;
+  background-color: #5a8fd4;
 }
 .controls span{
   font-size: 1.2rem;
@@ -95,14 +99,14 @@ img{
 
 }
 .checkout{
-  background-color: #f68b1e;
+  background-color: #0d2a92;
 }
 .clear{
   background-color: #999;
 }
 .checkout:hover{
-  background-color: #b5885b;
+  background-color: #5a8fd4;
 }
 .clear:hover{
-  background-color: #b88a8a;
+  background-color: #5a8fd4;
 }

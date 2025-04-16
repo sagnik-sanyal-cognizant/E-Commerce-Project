@@ -21,8 +21,6 @@ export class LoginComponent {
   }
   message: any = null;
 
-
-
   async handleSubmit() {
     if (!this.formData.email ||  !this.formData.password) {
       this.showMessage("Email and Password are required")

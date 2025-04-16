@@ -1,84 +1,83 @@
 nav {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0d2a92;
+  padding: 15px;
+  font-size: 20px;
+  font-weight: 600;
+  flex-wrap: wrap;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  max-width: 600px;
+}
+
+input {
+  padding: 10px;
+  width: 100%;
+  max-width: 500px;
+  border: none;
+  border-radius: 3px;
+  margin-right: 5px;
+  flex-grow: 1;
+}
+
+button {
+  padding: 10px;
+  margin: 5px;
+  border: none;
+  background-color: #fff;
+  color: #0d2a92;
+  font-weight: bold;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+  margin: 0 5px;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+a:hover {
+  transition: 0.5s;
+  color: #5a8fd4;
+}
+
+@media (max-width: 974px) {
+  nav {
+    flex-direction: column;
     align-items: center;
-    background-color: #F68B1E;
-    padding: 15px;
-    font-size: 20px;
-    font-weight: 600;
-    flex-wrap: wrap;
   }
-  
+
   form {
-    display: flex;
-    align-items: center;
-    flex-grow: 1;
-    max-width: 600px;
+    width: 100%;
+    margin-bottom: 10px;
   }
-  
+
   input {
-    padding: 10px;
-    width: 100%;
-    max-width: 500px;
-    border: none;
-    border-radius: 3px;
-    margin-right: 5px;
-    flex-grow: 1;
+    max-width: 100%;
   }
-  
-  button {
-    padding: 10px;
-    margin: 5px;
-    border: none;
-    background-color: #fff;
-    color: #F68B1E;
-    font-weight: bold;
-    border-radius: 3px;
-    cursor: pointer;
-  }
-  
+
   .nav-links {
-    display: flex;
     justify-content: center;
-    flex-wrap: wrap;
-    width: 100%;
   }
-  
+
   a {
-    text-decoration: none;
-    color: #fff;
-    margin: 0 5px;
-    font-weight: bold;
-    font-size: 24px;
+    font-size: 20px;
+    margin: 5px;
   }
-  
-  a:hover {
-    transition: 0.5s;
-    color: black;
-  }
-  
-  @media (max-width: 974px) {
-    nav {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    form {
-      width: 100%;
-      margin-bottom: 10px;
-    }
-  
-    input {
-      max-width: 100%;
-    }
-  
-    .nav-links {
-      justify-content: center;
-    }
-  
-    a {
-      font-size: 20px;
-      margin: 5px;
-    }
-  }
-  
+}

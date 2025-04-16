@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
       },
       error: (error) => {
         console.log(error)
-        this.error = error?.error?.message || "error getting products";
+        this.error = error?.error?.message || "Error getting products";
       }
     })
 

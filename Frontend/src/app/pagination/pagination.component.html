@@ -1,5 +1,4 @@
 <div>
-    <button *ngFor="let page of pageNumbers"
-    (click)="changePage(page)"
-    [class.active]="page === currentPage">{{page}}</button>
-  </div>
+  <button *ngFor="let page of pageNumbers" (click)="changePage(page)" [class.active]="page === currentPage">
+    {{page}}</button>
+</div>

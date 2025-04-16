@@ -1,30 +1,31 @@
 <div class="container">
-  <h2 style="text-align: center;">My Cart</h2>
-  <p *ngIf="message" class="message">{{message}}</p>
-
-  <div *ngIf="cart.length === 0" >
-    <img src="/assets/blank cart.png" alt="Your cart is empty!" class="empty-cart-image">
+    <h2 style="text-align: center;">My Cart</h2>
+    <p *ngIf="message" class="message">{{message}}</p>
+  
+    <div *ngIf="cart.length === 0" >
+      <img src="/assets/blank cart.png" alt="Your cart is empty!" class="empty-cart-image">
+    </div>
+  
+    <div *ngIf="cart.length > 0">
+        <ul>
+            <li *ngFor="let item of cart" class="item">
+                <img [src]="convertImageDataToUrl(item.imageData)" [alt]="item.name">
+                <div>
+                    <h2>{{item.name}}</h2>
+                    <p>{{item.description}}</p>
+                    <span class="price" id="stripeLine">₹{{ item.price }}</span>
+                    <span class="price"> ₹{{(item.price-item.discount)}}</span>
+  
+                    <div class="controls">
+                        <button (click)="decrementItem(item.id)" >-</button>
+                        <span>{{item.quantity}}</span>
+                        <button (click)="incrementItem(item.id)">+</button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <h2>Total: ₹ {{totalPrice}}</h2>
+        <button class="checkout" (click)="handleCheckOut()">Checkout</button>
+        <button class="clear" (click)="clearCart()">Clear Cart</button>
+    </div>
   </div>
-
-  <div *ngIf="cart.length > 0">
-      <ul>
-          <li *ngFor="let item of cart" class="item">
-              <img [src]="convertImageDataToUrl(item.imageData)" [alt]="item.name">
-              <div>
-                  <h2>{{item.name}}</h2>
-                  <p>{{item.description}}</p>
-                  <span class="price">₹ {{(item.price-item.discount)}}</span>
-
-                  <div class="controls">
-                      <button (click)="decrementItem(item.id)" >-</button>
-                      <span>{{item.quantity}}</span>
-                      <button (click)="incrementItem(item.id)">+</button>
-                  </div>
-              </div>
-          </li>
-      </ul>
-      <h2>Total: ₹ {{totalPrice}}</h2>
-      <button class="checkout" (click)="handleCheckOut()">Checkout</button>
-      <button class="clear" (click)="clearCart()">Clear Cart</button>
-  </div>
-</div>

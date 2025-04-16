@@ -23,4 +23,4 @@ export class PaginationComponent {
     this.pageChange.emit(page)
   }
 
-}s
+}
