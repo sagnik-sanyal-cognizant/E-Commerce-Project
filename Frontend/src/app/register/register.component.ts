@@ -38,7 +38,7 @@ export class RegisterComponent {
       }
     } catch (error: any) {
         console.log(error)
-        this.showMessage(error.error?.message || error.message || 'unable to register');
+        this.showMessage("Invalid input format !!");
     }
   }
 

@@ -4,17 +4,28 @@
       <p class="message" *ngIf="message">{{message}}</p>
 
       <input type="file" (change)="handleImage($event)">
+      <br>
 
+      <label>Category: </label>
       <select [(ngModel)]="categoryId" name="category" required>
           <option value="">Select Category</option>
           <option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</option>
       </select>
 
-      <input type="text" placeholder="Product name" [(ngModel)]="name" name="name" required>
-      <textarea placeholder="description" [(ngModel)]="description" name="description" required></textarea>
-      <input type="number" placeholder="price ₹" [(ngModel)]="price" name="price" required>
-      <input type="number" placeholder="quantity" [(ngModel)]="quantity" name="quantity" required>
-      <input type="number" placeholder="discount" [(ngModel)]="discount" name="discount" required>
+      <label>Name: </label>
+      <input type="text" placeholder="Product name" [(ngModel)]="name" name="name" placeholder="Must have 2 - 100 characters">
+
+      <label>Description: </label>
+      <textarea placeholder="description" [(ngModel)]="description" name="description" placeholder="Must have 5 - 100 characters"></textarea>
+
+      <label>Price ₹: </label>
+      <input type="number" [(ngModel)]="price" name="price" placeholder="Must be positive" required>
+
+      <label>quantity: </label>
+      <input type="number" [(ngModel)]="quantity" name="quantity" placeholder="Must be positive" required>
+
+      <label>Discount ₹: </label>
+      <input type="number" [(ngModel)]="discount" name="discount" placeholder="Must be positive" required>
 
       <button type="submit">Add Product</button>
   </form>

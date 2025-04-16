@@ -65,7 +65,7 @@ export class AddproductComponent implements OnInit {
       },
       error: (error) => {
         console.log(error);
-        this.message = error?.error?.message || "Unable to save a product";
+        this.message = "Please fill as per format";
       }
     });
   }
