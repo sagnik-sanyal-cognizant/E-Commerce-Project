@@ -13,7 +13,11 @@ import { CommonModule } from '@angular/common';
 })
 export class CartComponent implements OnInit {
 
-  constructor(private apiService:ApiService, private cartService:CartService, private router:Router) {}
+  constructor(
+    private apiService:ApiService,
+    private cartService:CartService,
+    private router:Router
+  ) {}
 
   cart:any[] = [];
   message: any = null;
@@ -23,39 +27,39 @@ export class CartComponent implements OnInit {
       this.loadCart();
   }
 
-  loadCart():void{
+  loadCart():void{ // Method to load cart items from the CartService
     this.cart = this.cartService.getCart();
     this.calculateTotalPrice()
   }
 
-  calculateTotalPrice(): void {
+  calculateTotalPrice(): void { // Method to calculate the total price of items in the cart
     this.totalPrice = this.cart.reduce((total, item) => {
       return total + (item.price - item.discount) * item.quantity;
     }, 0);
   }
 
 
-  incrementItem(itemId: number):void{
+  incrementItem(itemId: number):void{ // Method to increment the quantity of a cart item
     this.cartService.incrementItem(itemId)
     this.loadCart();
   }
 
-  decrementItem(itemId: number):void{
+  decrementItem(itemId: number):void{ // Method to decrement the quantity of a cart item
     this.cartService.decrementItem(itemId)
     this.loadCart();
   }
 
-  removeItem(itemId: number):void{
+  removeItem(itemId: number):void{ // Method to remove an item from the cart
     this.cartService.removeItem(itemId)
     this.loadCart();
   }
-  clearCart():void{
+  clearCart():void{ // Method to remove an item from the cart
     this.cartService.clearCart()
     this.loadCart();
   }
 
-  handleCheckOut():void{
-    if (!this.apiService.isAuthenticated()) {
+  handleCheckOut():void{ // Method to handle the checkout process
+    if (!this.apiService.isAuthenticated()) { // Check if the user is authenticated before proceeding
       this.message = "you need to login before you can place an order"
       setTimeout(()=>{
         this.message = null
@@ -64,17 +68,17 @@ export class CartComponent implements OnInit {
       return;
     }
 
-    const orderItems = this.cart.map(item =>({
+    const orderItems = this.cart.map(item =>({ // Prepare the order items for the API request
       productId: item.id,
       quantity: item.quantity
     }));
 
-    const orderRequest = {
+    const orderRequest = { // Create the order request object
       totalPrice: this.totalPrice,
       items: orderItems
     }
 
-    this.apiService.createOrder(orderRequest).subscribe({
+    this.apiService.createOrder(orderRequest).subscribe({ // Send the order request to the API
       next:(response)=>{
         this.message = (response.message)
         if (response.status === 200) {
@@ -84,7 +88,7 @@ export class CartComponent implements OnInit {
       },
       error:(error)=>{
         console.log(error)
-        this.message = error?.error?.message || "unable to place order"
+        this.message = "Unable to place order!"
       }
     })
 
