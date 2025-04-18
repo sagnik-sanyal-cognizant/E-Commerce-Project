@@ -25,11 +25,12 @@ export class ProductdetailsComponent implements OnInit {
   error: any = null;
 
   ngOnInit(): void {
+    // Get the product ID from the route parameters
     this.productId = this.route.snapshot.paramMap.get('productId');
     this.fetchProduct();
   }
 
-  async fetchProduct() {
+  async fetchProduct() { // Method to fetch product details from the API
     console.log("PRODUCT ID IS: " + this.productId)
     if (this.productId) {
       this.apiService.getProductById(this.productId).pipe(
@@ -48,21 +49,22 @@ export class ProductdetailsComponent implements OnInit {
     }
   }
 
-  addToCart() {
+  addToCart() { // Method to add the product to the cart
+    window.alert("Added to Cart!");
     if (this.productId) {
       this.cartService.addItem(this.product);
       this.cartItem = this.cartService.getCartItem(this.product.id)
     }
   }
 
-  incrementItem() {
+  incrementItem() { // Method to increment the quantity of the product in the cart
     if (this.product) {
       this.cartService.incrementItem(this.product.id);
       this.cartItem = this.cartService.getCartItem(this.product.id)
     }
   }
 
-  decrementItem() {
+  decrementItem() { // Method to decrement the quantity of the product in the cart
     if (this.product && this.cartItem) {
       if (this.cartItem.quantity > 1) {
         this.cartService.decrementItem(this.product.id)
