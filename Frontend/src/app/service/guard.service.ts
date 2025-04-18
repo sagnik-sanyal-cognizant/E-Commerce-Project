@@ -6,7 +6,7 @@ import { inject } from "@angular/core";
 export const userGuard: CanActivateFn = (route, state) => {
   if (inject(ApiService).isAuthenticated()) {
     return true;
-  }else{
+  } else {
     inject(Router).navigate(['/login'])
     return false;
   }
@@ -16,7 +16,7 @@ export const userGuard: CanActivateFn = (route, state) => {
 export const adminGuard: CanActivateFn = (route, state) => {
   if (inject(ApiService).isAdmin()) {
     return true;
-  }else{
+  } else {
     inject(Router).navigate(['/login'])
     return false;
   }

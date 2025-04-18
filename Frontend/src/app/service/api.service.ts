@@ -10,7 +10,9 @@ export class ApiService {
   authStatuschanged = new EventEmitter<void>();
   private static BASE_URL = 'http://localhost:2022';
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   private getHeader(): HttpHeaders {
     const token = localStorage.getItem('token');
@@ -19,7 +21,24 @@ export class ApiService {
     });
   }
 
-  /***AUTH & USERS API METHODS */
+  // AUTHENTICATION
+
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+  }
+
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem('token');
+    return !!token;
+  }
+
+  isAdmin(): boolean {
+    const role = localStorage.getItem('role');
+    return role === 'ADMIN';
+  }
+
+  // LOGIN & REGISTRATION API
 
   registerUser(registration: any): Observable<any> {
     return this.http.post(`${ApiService.BASE_URL}/auth/register`, registration);
@@ -41,7 +60,8 @@ export class ApiService {
     });
   }
 
-  /***PRODUCTS API */
+  // PRODUCTS API
+
   addProduct(formData: any): Observable<any> {
     return this.http.post(`${ApiService.BASE_URL}/product/create`, formData, {
       headers: this.getHeader()
@@ -78,7 +98,8 @@ export class ApiService {
     });
   }
 
-  /**CATEGOTY API */
+  // CATEGOTY API
+
   createCategory(body: any): Observable<any> {
     return this.http.post(`${ApiService.BASE_URL}/category/create`, body, {
       headers: this.getHeader()
@@ -105,7 +126,8 @@ export class ApiService {
     });
   }
 
-  /**ORDER API */
+  // ORDER API
+
   createOrder(body: any): Observable<any> {
     return this.http.post(`${ApiService.BASE_URL}/order/create`, body, {
       headers: this.getHeader()
@@ -139,7 +161,8 @@ export class ApiService {
     });
   }
 
-  /**ADDRESS  */
+  // ADDRESS API
+
   saveAddress(body: any): Observable<any> {
     return this.http.post(`${ApiService.BASE_URL}/address/save`, body, {
       headers: this.getHeader()
@@ -152,7 +175,8 @@ export class ApiService {
     });
   }
 
-  /**CART API */
+  // CART API
+
   addToCart(productId: string): Observable<any> {
     return this.http.post(`${ApiService.BASE_URL}/cart/add`, null, {
       headers: this.getHeader(),
@@ -191,19 +215,4 @@ export class ApiService {
     });
   }
 
-  /**AUTHENTICATION */
-  logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('role');
-  }
-
-  isAuthenticated(): boolean {
-    const token = localStorage.getItem('token');
-    return !!token;
-  }
-
-  isAdmin(): boolean {
-    const role = localStorage.getItem('role');
-    return role === 'ADMIN';
-  }
 }
