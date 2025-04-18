@@ -12,24 +12,30 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 
 export class EditcategoryComponent implements OnInit {
-  categoryForm: FormGroup;
+  categoryForm: FormGroup; // Variable to hold the form group for category editing
   message: any = null;
   categoryId: string = ''
 
-  constructor(private apiService: ApiService, private router: Router, private fb: FormBuilder, private route: ActivatedRoute) {
+  constructor(
+    private apiService: ApiService,
+    private router: Router,
+    private fb: FormBuilder,
+    private route: ActivatedRoute
+  ) {
 
-    this.categoryForm = this.fb.group({
+    this.categoryForm = this.fb.group({ // Initializing the form group with validation rules
       name: ['', Validators.required]
     })
   }
 
   ngOnInit(): void {
+    // Get the category ID from the route parameters
     this.categoryId = this.route.snapshot.paramMap.get("categoryId") || '';
     this.fetchCategoryById();
   }
 
+  // Method to fetch category details by ID from the API
   fetchCategoryById(): void {
-
     if (this.categoryId) {
       this.apiService.getCategoryById(this.categoryId).subscribe({
         next: (response) => {
@@ -37,7 +43,7 @@ export class EditcategoryComponent implements OnInit {
         },
         error: (error) => {
           console.log((error))
-          this.message = error?.error?.message || "unable to get categoty by id";
+          this.message = "Unable to get categoty by id";
           setTimeout(() => {
             this.message = null;
           }, 3000)
@@ -46,8 +52,7 @@ export class EditcategoryComponent implements OnInit {
     }
   }
 
-
-
+  // Method to handle form submission for category editing
   handleSubmit(): void {
     if (this.categoryForm.valid) {
       this.apiService.updateCategory(this.categoryId, this.categoryForm.value).subscribe({
@@ -62,7 +67,7 @@ export class EditcategoryComponent implements OnInit {
         },
         error: (error) => {
           console.log(error)
-          this.message = error?.error?.message || "unable to update Category";
+          this.message = "Unable to update Category";
         }
       })
     }
