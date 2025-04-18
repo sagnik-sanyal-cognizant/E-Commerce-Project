@@ -19,12 +19,15 @@ export class EditproductComponent implements OnInit {
   imageUrl: any = null;
   productId: string = '';
 
-  constructor(private apiService: ApiService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private fb: FormBuilder) { }
+  constructor(
+    private apiService: ApiService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit(): void {
+    // Get the product ID from the route parameters
     this.productId = this.route.snapshot.paramMap.get('productId') || '';
 
     this.editProductForm = this.fb.group({
@@ -37,10 +40,12 @@ export class EditproductComponent implements OnInit {
       discount: ['']
     });
 
+    // Fetch all categories from the API
     this.apiService.getAllCategory().subscribe(res => {
       this.categories = res.categoryList;
     });
 
+    // Fetch product details by ID from the API
     if (this.productId) {
       this.apiService.getProductById(this.productId).subscribe(res => {
         this.editProductForm.patchValue({
@@ -56,6 +61,7 @@ export class EditproductComponent implements OnInit {
     }
   }
 
+  // Method to handle image file selection and preview
   handleImageChange(event: Event): void {
     const input = event.target as HTMLInputElement;
 
@@ -71,6 +77,7 @@ export class EditproductComponent implements OnInit {
     }
   }
 
+  // Method to handle form submission for product editing
   handleSubmit(): void {
     const formData = new FormData();
     const formValues = this.editProductForm.value;
@@ -98,6 +105,7 @@ export class EditproductComponent implements OnInit {
       formData.append('discount', formValues.discount.toString());
     }
 
+    // Send the updated product details to the API
     this.apiService.updateProduct(formData).subscribe({
       next: (res) => {
         this.message = res.message;
@@ -108,7 +116,7 @@ export class EditproductComponent implements OnInit {
       },
       error: (error) => {
         console.log(error);
-        this.message = error?.error?.message || "Unable to update a product";
+        this.message = "Unable to update a product";
       }
     });
   }
@@ -119,4 +127,5 @@ export class EditproductComponent implements OnInit {
     const blob = new Blob([byteArray], { type: 'image/jpeg' });
     return URL.createObjectURL(blob);
   }
+
 }

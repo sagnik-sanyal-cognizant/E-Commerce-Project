@@ -16,15 +16,22 @@ export class AdminorderdetailsComponent implements OnInit {
   selectedStatus: { [key: number]: string } = {};
   orderId: any = '';
   message: any = null;
+
+  // Array to hold possible order statuses
   OderStatus = ["PENDING", "CONFIRMED", "SHIPPED", "DELIVERED", "CANCELLED", "RETURNED"];
 
-  constructor(private apiService: ApiService, private route: ActivatedRoute) { }
+  constructor(
+    private apiService: ApiService,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
+    // Get the order ID from the route parameters
     this.orderId = this.route.snapshot.paramMap.get('orderId');
     this.fetchOrderDetails();
   }
 
+  // Get the order ID from the route parameters
   fetchOrderDetails(): void {
     if (this.orderId) {
       this.apiService.getOrderItemById(this.orderId).subscribe({
@@ -42,12 +49,13 @@ export class AdminorderdetailsComponent implements OnInit {
     }
   }
 
+  // Method to fetch user address from the API
   fetchUserAddress(userId: string): void {
     this.apiService.getAddressByUserId(userId).subscribe({
       next: (addresses) => {
         this.orderItem.forEach(item => {
           if (item.user.id === userId) {
-            item.user.address = addresses[0]; // Assuming you only need the first address
+            item.user.address = addresses[0]; // Only the first address
           }
         });
       },
@@ -57,10 +65,13 @@ export class AdminorderdetailsComponent implements OnInit {
     });
   }
 
+  // Method to handle status change for an order item
   handleStatusChange(orderId: number, newStatus: string): void {
     this.selectedStatus[orderId] = newStatus;
   }
 
+
+  // Method to submit the status change for an order item
   handleSubmitStatusChange(orderId: number): void {
     this.apiService.updateOrderItemStatus(orderId.toString(), this.selectedStatus[orderId]).subscribe({
       next: (res) => {

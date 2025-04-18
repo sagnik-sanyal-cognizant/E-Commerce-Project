@@ -9,9 +9,11 @@ import { Router } from '@angular/router';
   styleUrl: './admin.component.css'
 })
 export class AdminComponent {
-  constructor(private router: Router){}
+  constructor(
+    private router: Router
+  ){}
 
-  navigateTo(path: string): void{
+  navigateTo(path: string): void{ // Nagivate to Admin page
     this.router.navigate(([path]))
   }
 

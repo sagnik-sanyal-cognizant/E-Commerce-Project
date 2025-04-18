@@ -12,22 +12,27 @@ import { Router } from '@angular/router';
   styleUrl: './addcategory.component.css'
 })
 export class AddcategoryComponent {
-  categoryForm: FormGroup;
+  categoryForm: FormGroup; // Variable to hold the form group for category creation
   message: any = null;
 
-  constructor(private apiService:ApiService, private router:Router, private fb:FormBuilder){
+  constructor(
+    private apiService:ApiService,
+    private router:Router,
+    private fb:FormBuilder
+  ){
 
-    this.categoryForm = this.fb.group({
+    this.categoryForm = this.fb.group({ // Initializing the form group with validation rules
       name: ['', Validators.required]
     })
   }
 
+  // Method to handle form submission for category creation
   handleSubmit():void{
     if(this.categoryForm.valid){
       this.apiService.createCategory(this.categoryForm.value).subscribe({
         next:(response) =>{
           if (response.status === 200) {
-            this.message = "categoty successfully saved"
+            this.message = "Categoty successfully saved!"
             setTimeout(()=>{
               this.message = null;
               this.router.navigate(['/admin/categories']);
@@ -36,7 +41,7 @@ export class AddcategoryComponent {
         },
         error:(error) => {
           console.log(error)
-          this.message = error?.error?.message || "unable to save category";
+          this.message = "Unable to save category!";
         }
       })
     }

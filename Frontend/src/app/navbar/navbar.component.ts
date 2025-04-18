@@ -6,7 +6,6 @@ import { Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 
-
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -16,29 +15,38 @@ import { Subscription } from 'rxjs';
 })
 
 export class NavbarComponent implements OnInit, OnDestroy {
-  constructor(private readonly apiService: ApiService, private router: Router) { }
+  constructor(
+    private readonly apiService: ApiService,
+    private router: Router
+  ) { }
 
   isAdmin: boolean = false;
   isAuthenticated: boolean = false;
   searchValue: string = '';
-  private authStatusSub: Subscription | null = null;
+  private authStatusSub: Subscription | null = null; // Subscribe to Auth changes
 
 
 
-  ngOnInit(): void {
+  ngOnInit(): void { // Check if the user is authenticated and if they are an admin
     this.isAuthenticated = this.apiService.isAuthenticated();
     this.isAdmin = this.apiService.isAdmin();
 
+
+    // Subscribe to authentication status changes
     this.authStatusSub = this.apiService.authStatuschanged.subscribe(() => {
       this.isAuthenticated = this.apiService.isAuthenticated();
       this.isAdmin = this.apiService.isAdmin();
     })
   }
 
+  // Method to handle search form submission
   handleSearchSubmit() {
-    this.router.navigate(['/home'], { queryParams: { search: this.searchValue } });
+    this.router.navigate(['/home'], {
+      queryParams: { search: this.searchValue }
+    });
   }
 
+  // Method to handle user logout
   handleLogout() {
     const confirm = window.confirm("Are you sure you want to log out? ")
     if (confirm) {
@@ -48,6 +56,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Lifecycle hook to clean up subscriptions when the component is destroyed
   ngOnDestroy(): void {
     if (this.authStatusSub) {
       this.authStatusSub.unsubscribe();

@@ -53,7 +53,7 @@ button:hover {
 }
 
 img{
-  width: 150px; /* Fixed width */
-  height: 150px; /* Fixed height */
+  width: 150px;
+  height: 150px;
   object-fit: contain;
 }

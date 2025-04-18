@@ -14,22 +14,28 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private apiService: ApiService, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private apiService: ApiService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
   products: any[] = [];
   currentPage = 1;
   totalPages = 0;
-  itemsPerPage = 10;
+  itemsPerPage = 10; // Pagination details 10 products per page
   error: any = null;
 
   ngOnInit(): void {
+    // Subscribe to query parameters to get search item and page number
     this.route.queryParamMap.subscribe((params: ParamMap) => {
       const searchItem = params.get('search');
       const pageParam = params.get('page');
       this.currentPage = pageParam ? +pageParam : 1
-      this.fetchProducts(searchItem)
+      this.fetchProducts(searchItem) // Fetch products based on the search item
     })
   }
 
+  // Method to fetch products from the API based on the search item
   fetchProducts(searchItem: string | null): void {
     const productObservable = searchItem ? this.apiService.searchProducts(searchItem)
       : this.apiService.getAllProducts();
@@ -37,19 +43,21 @@ export class HomeComponent implements OnInit {
     productObservable.subscribe({
       next: (response) => {
         if (response?.productList && response.productList.length > 0) {
+          // Handle the response and update the product list
           this.handleProductResponse(response.productList)
         } else {
-          this.error = 'Product Not Found'
+          this.error = 'Product Not Found!'
         }
       },
       error: (error) => {
         console.log(error)
-        this.error = error?.error?.message || "Error getting products";
+        this.error = "Error getting products due to Backend not started!";
       }
     })
 
   }
 
+  // Method to handle the product response and update pagination details
   handleProductResponse(products: []): void {
     this.totalPages = Math.ceil(products.length / this.itemsPerPage);
     this.products = products.slice(
@@ -59,6 +67,7 @@ export class HomeComponent implements OnInit {
     console.log(this.products)
   }
 
+  // Method to handle page changes for pagination
   changePage(page: number): void {
     this.router.navigate([], {
       relativeTo: this.route,

@@ -12,7 +12,10 @@ import { Router } from '@angular/router';
 })
 export class CategoryComponent implements OnInit {
 
-  constructor(private apiService:ApiService, private router:Router){}
+  constructor(
+    private apiService:ApiService,
+    private router:Router
+  ){}
 
   error:any = null;
   categories: any[] = [];
@@ -21,17 +24,18 @@ export class CategoryComponent implements OnInit {
       this.fetchCategories();
   }
 
-  fetchCategories():void{
+  fetchCategories():void{ // Method to fetch categories from the API
     this.apiService.getAllCategory().subscribe({
       next: (response) =>{
         this.categories = response.categoryList || []
       },
       error: (err) =>{
-        this.error = err?.error?.message || 'unable to get categories'
+        this.error = 'Unable to get categories!'
       }
     })
   }
 
+  // Method to handle category click and navigate to the products page
   handleCategoryClick(categoryId: number): void{
     this.router.navigate(['/products', categoryId])
   }

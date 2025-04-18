@@ -12,14 +12,17 @@ import { Router } from '@angular/router';
 })
 export class AdmincategoryComponent implements OnInit {
 
-  categories: any[] = [];
-  constructor(private apiService: ApiService, private router: Router) { }
-
+  categories: any[] = []; // Variable to hold the list of categories
+  constructor(
+    private apiService: ApiService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.fetchCategories();
   }
 
+  // Method to fetch all categories from the API
   fetchCategories(): void {
     this.apiService.getAllCategory().subscribe({
       next: (response) => {
@@ -31,12 +34,13 @@ export class AdmincategoryComponent implements OnInit {
     })
   }
 
+  // Method to handle the edit action for a category
   handleEdit(id: string): void {
     this.router.navigate([`/admin/edit-category/${id}`])
   }
 
   handleDelete(id: string): void {
-    const confirm = window.confirm("Are you sure you wanna delete this category?")
+    const confirm = window.confirm("Are you sure you want to delete this category?")
     if (confirm) {
       this.apiService.deleteCategory(id).subscribe({
         next: () => {
@@ -49,6 +53,7 @@ export class AdmincategoryComponent implements OnInit {
     }
   }
 
+  // Method to navigate to the add category page
   addCategoty(): void {
     this.router.navigate([`/admin/add-category`])
   }

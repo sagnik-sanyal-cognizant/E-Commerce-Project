@@ -13,7 +13,11 @@ import { Router } from '@angular/router';
 })
 export class AddproductComponent implements OnInit {
 
-  constructor(private apiService: ApiService, private router: Router) { }
+  constructor(
+    private apiService: ApiService,
+    private router: Router
+  ) { }
+
   image: any = null;
   categories: any[] = [];
   categoryId: Number | null = null;
@@ -25,7 +29,7 @@ export class AddproductComponent implements OnInit {
   message: string = '';
 
   ngOnInit(): void {
-    this.apiService.getAllCategory().subscribe({
+    this.apiService.getAllCategory().subscribe({ // Fetch all categories from the API
       next: (response) => {
         this.categories = response.categoryList || [];
       },
@@ -35,6 +39,7 @@ export class AddproductComponent implements OnInit {
     });
   }
 
+  // Method to handle image file selection
   handleImage(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -42,11 +47,14 @@ export class AddproductComponent implements OnInit {
     }
   }
 
+  // Method to handle form submission for adding a product
   handleSubmit(): void {
     if (!this.image || !this.categoryId || !this.name || !this.description || !this.price || !this.quantity || !this.discount) {
-      this.message = "Please fill in all fields";
+      this.message = "Please fill in all fields!";
       return;
     }
+
+    // Create a FormData object to hold the product details
     const formData = new FormData();
     formData.append('image', this.image);
     formData.append('categoryId', this.categoryId.toString());
@@ -56,6 +64,7 @@ export class AddproductComponent implements OnInit {
     formData.append('quantity', this.quantity);
     formData.append('discount', this.discount);
 
+    // Send the product details to the API
     this.apiService.addProduct(formData).subscribe({
       next: (res) => {
         this.message = res.message;
@@ -65,7 +74,7 @@ export class AddproductComponent implements OnInit {
       },
       error: (error) => {
         console.log(error);
-        this.message = "Please fill as per format";
+        this.message = "Please fill as per format!";
       }
     });
   }

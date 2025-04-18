@@ -53,6 +53,7 @@ a {
 }
 
 a:hover {
+  cursor: pointer;
   transition: 0.5s;
   color: #5a8fd4;
 }
