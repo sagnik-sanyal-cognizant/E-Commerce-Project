@@ -44,9 +44,9 @@ li {
 }
 
 li img {
-  width: 60px; /* Fixed width */
-  height: 60px; /* Fixed height */
-  object-fit: contain; /* Ensures the entire image fits within the area */
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
   margin-right: 10px;
 }
 
@@ -63,7 +63,6 @@ li div {
   margin: 0;
 }
 
-/* Responsive styles */
 @media (max-width: 600px) {
   .profile {
     width: 100%;
@@ -106,7 +105,7 @@ li div {
   }
 
   li img {
-    width: 50px; /* Adjusted width for smaller screens */
-    height: 50px; /* Adjusted height for smaller screens */
+    width: 50px;
+    height: 50px;
   }
 }

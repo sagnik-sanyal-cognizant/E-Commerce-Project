@@ -12,18 +12,21 @@ import { Router } from '@angular/router';
   styleUrl: './profile.component.css',
 })
 export class ProfileComponent implements OnInit {
-  constructor(private apiService: ApiService, private router: Router) {}
+  constructor(
+    private apiService: ApiService,
+    private router: Router
+  ) {}
 
   userInfo: any = null;
   error: any = null;
   currentPage: number = 1;
-  itemsPerPage: number = 5;
+  itemsPerPage: number = 5; // Pagination details 5 order items per page
 
   ngOnInit(): void {
     this.fetchUserInfo();
   }
 
-  fetchUserInfo(): void {
+  fetchUserInfo(): void { // Method to fetch user information from the API
     this.apiService.getLoggedInUserInfo().subscribe({
       next: (response) => {
         this.userInfo = response.user;
@@ -31,24 +34,24 @@ export class ProfileComponent implements OnInit {
       },
       error: (error) => {
         console.log(error);
-        this.error =
-          error?.error?.message || 'Unable to fetch user information';
+        this.error = 'Unable to fetch user information';
       },
     });
   }
 
-  fetchUserAddress(userId: string): void {
+  fetchUserAddress(userId: string): void { // Method to fetch user address from the API
     this.apiService.getAddressByUserId(userId).subscribe({
       next: (addresses) => {
         this.userInfo.address = addresses[0];
       },
       error: (error) => {
         console.log(error);
-        this.error = error?.error?.message || 'Unable to fetch user address';
+        this.error = 'Unable to fetch user address';
       },
     });
   }
 
+  // Method to handle address click and navigate to the appropriate page
   handleAddressClick(): void {
     const urlPathToNavigateTo = this.userInfo?.address? '/edit-address': '/add-address';
     this.router.navigate([urlPathToNavigateTo], {
@@ -56,10 +59,11 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  onPageChange(page: number): void {
+  onPageChange(page: number): void { // Method to handle page changes for pagination
     this.currentPage = page;
   }
 
+  // Getter to retrieve paginated orders
   get paginatedOrders(): any[] {
     if (!this.userInfo?.orderItemList) return [];
 
@@ -69,6 +73,7 @@ export class ProfileComponent implements OnInit {
     );
   }
 
+  // Getter to calculate the total number of pages
   get totalPages(): number {
     return Math.ceil(
       (this.userInfo?.orderItemList?.length || 0) / this.itemsPerPage
