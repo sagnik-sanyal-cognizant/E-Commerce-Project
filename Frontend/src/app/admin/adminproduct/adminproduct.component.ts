@@ -13,19 +13,21 @@ import { Router } from '@angular/router';
 })
 export class AdminproductComponent implements OnInit {
 
-  constructor(private apiService: ApiService, private router: Router) { }
+  constructor(
+    private apiService: ApiService,
+    private router: Router
+  ) { }
   products: any[] = [];
   currentPage: number = 1;
   totalPages: number = 0;
-  itemsPerPage: number = 5;
+  itemsPerPage: number = 5; // Pagination 5 items per page
   error: string = ''
-
-
 
   ngOnInit(): void {
     this.fetchProducts();
   }
 
+  // Method to fetch products from the API
   fetchProducts(): void {
     const productObservable = this.apiService.getAllProducts();
 
@@ -39,12 +41,13 @@ export class AdminproductComponent implements OnInit {
       },
       error: (error) => {
         console.log(error)
-        this.error = error?.error?.message || "error getting products";
+        this.error = "Error getting products due to backend not started!";
       }
     })
 
   }
 
+  // Method to handle the product response and update pagination details
   handleProductResponse(products: []): void {
     this.totalPages = Math.ceil(products.length / this.itemsPerPage);
     this.products = products.slice(
@@ -54,22 +57,27 @@ export class AdminproductComponent implements OnInit {
     console.log(this.products)
   }
 
+
+  // Method to handle page changes for pagination
   onPageChange(page: number): void {
     this.currentPage = page;
     this.fetchProducts();
   }
 
+  // Method to handle the edit action for a product
   handleEdit(productId: string): void {
     this.router.navigate([`/admin/edit-product/${productId}`])
   }
 
+
+  // Method to navigate to the add product page
   goToAddProduct(): void {
     this.router.navigate([`/admin/add-product`])
   }
 
-
+  // Method to handle the delete action for a product
   handleDelete(id: string): void {
-    const confirm = window.confirm("Are you sure you wanna delete this product?")
+    const confirm = window.confirm("Are you sure you want to delete this product?")
     if (confirm) {
       this.apiService.deletProduct(id).subscribe({
         next: () => {
