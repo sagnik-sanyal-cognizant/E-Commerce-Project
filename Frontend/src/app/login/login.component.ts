@@ -14,20 +14,23 @@ import { firstValueFrom } from 'rxjs';
 })
 export class LoginComponent {
 
-  constructor(private readonly apiService: ApiService, private router: Router) { }
+  constructor(
+    private readonly apiService: ApiService,
+    private router: Router
+  ) { }
   formData: any = {
     email: '',
     password: ''
   }
-  message: any = null;
+  message: any = null; // Variable to hold messages for user feedback
 
-  async handleSubmit() {
+  async handleSubmit() { // Method to handle form submission for login
     if (!this.formData.email ||  !this.formData.password) {
       this.showMessage("Email and Password are required")
       return;
     }
 
-    try {
+    try { // Attempt to login the user using the API
       const response: any = await firstValueFrom(this.apiService.loginUser(this.formData));
       if (response.status === 200) {
         this.showMessage('User Successfully logged in');
@@ -38,12 +41,11 @@ export class LoginComponent {
       }
     } catch (error: any) {
         console.log(error)
-        this.showMessage(error.error?.message || error.message || 'unable to login');
+        this.showMessage('Unable to login');
     }
   }
 
-
-
+  // Method to display messages to the user
   showMessage(message: string) {
     this.message = message;
     setTimeout(() => {
