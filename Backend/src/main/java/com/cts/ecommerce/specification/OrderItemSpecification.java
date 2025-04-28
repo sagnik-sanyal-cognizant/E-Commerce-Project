@@ -26,7 +26,7 @@ public class OrderItemSpecification {
                 return criteriaBuilder.greaterThanOrEqualTo(root.get("createdAt"), startDate);
             } else if (endDate != null) {
                 return criteriaBuilder.lessThanOrEqualTo(root.get("createdAt"), endDate);
-            }else{
+            } else {
                 return null;
             }
         });

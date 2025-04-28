@@ -17,9 +17,11 @@ import java.util.List;
 @Builder
 public class AuthUser implements UserDetails {
 
-    private User user;
+	private static final long serialVersionUID = 1L;
+	
+	private User user;
     
-    // @return returns a collection of granted authorities to the user.
+    // Returns a collection of granted authorities to the user.
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(user.getRole().name()));

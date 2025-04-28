@@ -20,7 +20,7 @@ public class CorsConfig {
             	// Adds CORS mappings to allow requests from any origin with specified HTTP methods
                 registry.addMapping("/**")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
-                        .allowedOrigins("*"); // Notation for allowing further FrontEnd access like Angular
+                        .allowedOrigins("*"); // Notation for allowing FrontEnd access to Angular
             }
         };
     }

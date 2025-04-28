@@ -2,7 +2,6 @@ package com.cts.ecommerce.dto;
 
 import java.math.BigDecimal;
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;

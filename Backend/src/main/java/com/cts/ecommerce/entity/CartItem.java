@@ -1,7 +1,8 @@
 package com.cts.ecommerce.entity;
 
-
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -10,24 +11,27 @@ import lombok.Data;
 public class CartItem 
 {
 
-    //primary key-cartItemId
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartItemId;
 
-    //list of cart items in one cart
     @ManyToOne
     @JoinColumn(name = "cart_id", referencedColumnName = "cartId")
     private Cart cart;
 
-    //many cart items can have same product Id
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
-    
+
+    @NotNull(message = "Quantity is required")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Quantity must be greater than 0")
     private Integer quantity;
 
-    private double discount;
+    @NotNull(message = "Discount is required")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Discount must be greater than 0")
+    private Double discount;
 
+    @NotNull(message = "Price is required")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Price must be greater than 0")
     private double productPrice;
 }

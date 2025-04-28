@@ -35,6 +35,7 @@ public class Response {
 
     private ProductDto product;
     private List<ProductDto> productList;
+    private byte[] imageUrl;
 
     private OrderItemDto orderItem;
     private List<OrderItemDto> orderItemList;

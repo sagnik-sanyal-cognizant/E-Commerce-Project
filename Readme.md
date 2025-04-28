@@ -1,9 +1,11 @@
 # E-Commerce Platform
 
+![UI Landing Page Image](Images/UIpic.png)
+
 ## Introduction
 This project is an E-Commerce Platform that allows users to browse products, manage shopping carts and track orders. It includes an admin interface to manage products, orders, users, and analytics. The backend supports Java (Spring Boot) frameworks and for database purpose, MySQL is used.
 
-![UI Landing Page Image](Images/UIpic.png)
+![DFD Image](Images/DFD.png)
 
 ## Features
 ### Product Management
@@ -46,7 +48,7 @@ This project is an E-Commerce Platform that allows users to browse products, man
 ### Admin Dashboard Module
 - **Entities**: Admin (AdminID, Name, Role, Permissions)
 
-![UI Landing Page Image](Images/DB.png)
+![Database Schema](Images/DB.png)
 
 ## Deployment
 - **Frontend**: Served using local servers.

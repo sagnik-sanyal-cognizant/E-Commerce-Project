@@ -9,8 +9,7 @@ import org.springframework.web.context.request.WebRequest;
 import com.cts.ecommerce.dto.Response;
 
 @ControllerAdvice
-public class GlobalExceptionHandler 
-{
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Response> handleAllException(Exception ex, WebRequest request)
@@ -61,6 +60,6 @@ public class GlobalExceptionHandler
     	
     	// Returns the exception message with HTTP status 401
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
-    }
+    } 
 
 }
