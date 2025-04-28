@@ -2,7 +2,6 @@ package com.cts.ecommerce.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import com.cts.ecommerce.dto.AddressDto;
 import com.cts.ecommerce.dto.Response;
 import com.cts.ecommerce.entity.Address;
@@ -10,6 +9,11 @@ import com.cts.ecommerce.entity.User;
 import com.cts.ecommerce.repository.AddressRepo;
 import com.cts.ecommerce.service.interf.AddressService;
 import com.cts.ecommerce.service.interf.UserService;
+import com.cts.ecommerce.mapper.EntityDtoMapper;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -17,19 +21,21 @@ public class AddressServiceImpl implements AddressService {
 
     private final AddressRepo addressRepo;
     private final UserService userService;
+    private final EntityDtoMapper entityDtoMapper;
 
-    // Saves or updates an address for the logged-in user
     @Override
     public Response saveAndUpdateAddress(AddressDto addressDto) {
-        
-    	User user = userService.getLoginUser();
-        Address address = user.getAddress();
+        User user = userService.getLoginUser();
+        Optional<Address> existingAddressOptional = addressRepo.findByUserId(user.getId()).stream().findFirst();
 
-        if (address == null) { // Checks if the user does not have an address and creates a new
+        Address address;
+        if (existingAddressOptional.isPresent()) {
+            address = existingAddressOptional.get();
+        } else {
             address = new Address();
             address.setUser(user);
         }
-        // Updates the address fields if they are provided in the addressDto
+
         if (addressDto.getStreet() != null) address.setStreet(addressDto.getStreet());
         if (addressDto.getCity() != null) address.setCity(addressDto.getCity());
         if (addressDto.getState() != null) address.setState(addressDto.getState());
@@ -38,11 +44,18 @@ public class AddressServiceImpl implements AddressService {
 
         addressRepo.save(address);
 
-        // Determines the message based on whether the address was created or updated
-        String message = (user.getAddress() == null) ? "Address successfully created" : "Address successfully updated";
+        String message = existingAddressOptional.isPresent() ? "Address successfully updated" : "Address successfully created";
         return Response.builder()
                 .status(200)
                 .message(message)
                 .build();
+    }
+
+    @Override
+    public List<AddressDto> getAddressByUserId(Long userId) {
+        List<Address> addresses = addressRepo.findByUserId(userId);
+        return addresses.stream()
+                .map(entityDtoMapper::mapAddressToDtoBasic)
+                .collect(Collectors.toList());
     }
 }

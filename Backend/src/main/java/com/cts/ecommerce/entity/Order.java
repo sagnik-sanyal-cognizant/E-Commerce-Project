@@ -1,6 +1,8 @@
 package com.cts.ecommerce.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -17,6 +19,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "Total price is required")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Total price must be greater than 0")
     private BigDecimal totalPrice;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -34,14 +38,14 @@ public class Order {
         return id != null && id.equals(order.id); // Comparison based on 'id'
     }
 
-    // hashCode method
+    // hashCode method ensures hashCode is consistent with equals
     @Override
     public int hashCode() {
-        return Objects.hash(id); // Ensure hashCode is consistent with equals
+        return Objects.hash(id); 
     }
 
-    // canEqual method
+    // canEqual method only allows comparison with other Order objects
     public boolean canEqual(Object obj) {
-        return obj instanceof Order;  // Only allow comparison with other Order objects
+        return obj instanceof Order; 
     }
 }

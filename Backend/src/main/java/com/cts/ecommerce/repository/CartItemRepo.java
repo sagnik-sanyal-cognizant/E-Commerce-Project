@@ -11,7 +11,7 @@ import com.cts.ecommerce.entity.CartItem;
 @Repository
 public interface CartItemRepo extends JpaRepository<CartItem, Long> 
 {
-	// Custom JPQL query to find cart items by product name for a specific user.
+	   // Custom JPQL query to find cart items by product name for a specific user.
        @Query("SELECT ci FROM CartItem ci WHERE ci.cart.user.id = :userId AND LOWER(ci.product.name) LIKE LOWER(CONCAT('%', :productName, '%'))")
        List<CartItem> findCartItemsByProductName(@Param("userId") Long userId, @Param("productName") String productName);
 

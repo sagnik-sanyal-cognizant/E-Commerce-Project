@@ -25,7 +25,7 @@ public class JwtUtils {
     private static final long EXPIRATION_TIME_IN_MILLISEC = 1000L * 60L *60L *24L * 30L * 6L; //Expires 6 months
     private SecretKey key;
 
-    @Value("${secretJwtString}") //Value in the application properties of 32characters
+    @Value("${secretJwtString}") //Value in application.properties of 32 characters
     private String secretJwtString; 
 
     // Initializes the secret key for signing JWT tokens
